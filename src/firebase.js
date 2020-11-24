@@ -1,4 +1,5 @@
 import firebase from "firebase";
+
 const firebaseConfig = "You need to add your firebase credential here....";
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

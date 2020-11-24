@@ -36,9 +36,14 @@ function Users() {
   return (
     <div className="users">
       <div>
-        {user?.role === "Manager" && <UsersHeader />}
-
-        <UsersFilter usersList={usersList} customerList={customerList} />
+        {user?.role === "Customer" ? (
+          <p></p>
+        ) : (
+          <>
+            {user?.role === "Manager" && <UsersHeader />}
+            <UsersFilter usersList={usersList} customerList={customerList} />
+          </>
+        )}
       </div>
     </div>
   );

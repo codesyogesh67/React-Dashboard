@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import db, { auth } from "../../firebase";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -16,8 +16,6 @@ function SignUp() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((auth) => {
-        // auth.user.add
-        console.log(auth.user);
         db.collection("users").add({
           first_name: firstName.toLowerCase(),
           last_name: lastName.toLowerCase(),
@@ -26,15 +24,10 @@ function SignUp() {
           id: auth.user.uid,
           role: "Customer",
         });
-        history.push("/");
+        history.push("/login");
       })
       .catch((error) => alert(error.message));
-    // firebase.database().ref("/user/userId")
   };
-
-  //   const signIn = () => {
-  //     auth.signInWithPopup(provider).catch((err) => alert(err.message));
-  //   };
 
   return (
     <div className="signup">

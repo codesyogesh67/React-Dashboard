@@ -22,7 +22,7 @@ function Login() {
           })
           .catch((error) => alert(error.message));
       } else {
-        setMessage("Your account has been disabled.");
+        setMessage("Your account has be accessed right now.");
       }
     });
   };
