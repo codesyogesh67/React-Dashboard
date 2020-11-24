@@ -1,3 +1,15 @@
+This is built with:
+
+•	React
+•	Firebase (Database & Authentication)
+•	Redux
+•	Material-ui Component
+•	Flexbox
+
+ 
+ 
+ 
+ 
  It's Order Management App where you can place order, review order by manager or employee which can be seen in customer's order list as processing or
   processed status. 
       
