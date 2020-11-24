@@ -1,0 +1,63 @@
+.userForm {
+  overflow: scroll;
+  width: 100%;
+}
+
+.userForm__title {
+  text-transform: capitalize;
+}
+
+.userForm__form {
+  margin: 5% 20%;
+  display: flex;
+  flex-direction: column;
+  width: 67vw;
+}
+.userForm__row {
+  display: flex;
+  align-items: center;
+}
+.userForm__row > label {
+  width: 100px;
+}
+
+.userForm__row > input {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(160, 159, 159);
+  margin-bottom: 0.5rem;
+  width: 200px;
+  font-size: 1rem;
+  outline-width: 0;
+}
+
+.userForm__buttons {
+  display: flex;
+}
+
+.userForm__buttons > button,
+.userForm__back {
+  width: 100px;
+
+  margin-left: 15%;
+  margin-top: 1.5rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(172, 171, 171);
+  background: #3ea4fb;
+  outline-width: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 765px) {
+  .userForm__form {
+    margin: 5% 30%;
+  }
+  .userForm__row > input {
+    width: 350px;
+  }
+}

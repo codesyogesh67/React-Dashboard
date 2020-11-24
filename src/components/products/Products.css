@@ -1,0 +1,111 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  overflow: scroll;
+  padding: 0 2rem;
+}
+.products::-webkit-scrollbar {
+  width: 0.5em;
+}
+.products::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.products::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+/* Add products */
+
+.addproducts__title {
+  text-transform: capitalize;
+  text-align: center;
+}
+.addproducts__form {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  align-items: center;
+  padding-bottom: 0;
+}
+
+.addproducts__form > input {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(160, 159, 159);
+  margin-bottom: 0.5rem;
+  width: 260px;
+  font-size: 1rem;
+  outline-width: 0;
+}
+
+.addproducts__form > button {
+  width: 130px;
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(172, 171, 171);
+  background: #3ea4fb;
+  outline-width: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+}
+
+/* products list */
+.productsList {
+  overflow: scroll;
+}
+
+.productsList__cartIcon {
+  cursor: pointer;
+}
+
+.productList__editInput {
+  border: 1px solid rgb(235, 235, 235);
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  text-align: center;
+  outline-width: 0;
+}
+
+.productList__editSave {
+  width: 70px;
+
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(172, 171, 171);
+  background: #60af06;
+  outline-width: 0;
+  color: white;
+
+  font-size: 1rem;
+  border: none;
+}
+
+.productsList__editIcon {
+  height: 1.3rem !important;
+  width: 25px !important;
+  margin-top: 0.2rem;
+  border-radius: 0.3rem;
+  background: rgb(64, 124, 226);
+  cursor: pointer;
+  font-size: 1rem !important;
+  fill: rgb(252, 251, 251) !important;
+  font-weight: 600 !important;
+}
+
+.productsList__deleteIcon {
+  height: 1.3rem !important;
+  width: 25px !important;
+  margin-top: 0.2rem;
+  border-radius: 0.3rem;
+  background: rgb(187, 67, 67);
+  cursor: pointer;
+  font-size: 1rem !important;
+  fill: rgb(252, 251, 251) !important;
+  font-weight: 600 !important;
+}

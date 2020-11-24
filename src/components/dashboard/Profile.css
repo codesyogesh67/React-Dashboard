@@ -1,0 +1,50 @@
+.profile__title {
+  text-transform: capitalize;
+}
+
+.profile__form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.3rem;
+
+  /* align-items: center; */
+}
+.profile__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 70px;
+}
+
+.profile__row > input {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(160, 159, 159);
+  margin-bottom: 0.5rem;
+  width: 360px;
+  font-size: 1rem;
+  outline-width: 0;
+}
+
+.profile__form > button {
+  width: 100px;
+  margin: 0 35%;
+  margin-top: 1.5rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(172, 171, 171);
+  background: #3ea4fb;
+  outline-width: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+}
+
+.profile__roleValue {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 360px;
+  font-size: 1rem;
+}

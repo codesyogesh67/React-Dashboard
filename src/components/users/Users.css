@@ -1,0 +1,250 @@
+.users {
+  overflow: scroll;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+}
+/* Users Header */
+
+.users__button {
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  outline-width: 0;
+  border: 1.5px solid rgb(223, 222, 222);
+  background: white;
+  margin-right: 1.5rem;
+  width: 100px;
+  font-weight: 500;
+  color: rgb(43, 42, 42);
+  cursor: pointer;
+}
+.users__button:focus {
+  background: rgb(226, 53, 53);
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.users__buttonExcel {
+  width: 120px;
+}
+
+.usersHeader {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem;
+}
+
+.usersHeader__title {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgb(226, 226, 226);
+}
+.usersHeader__links,
+.usersFilter__roles {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.usersList__list {
+  padding-top: 2rem;
+  overflow: scroll;
+}
+
+a {
+  text-decoration: none;
+}
+
+.usersList__fullName {
+  color: black;
+}
+.MuiTableCell-sizeSmall {
+  padding: 10px !important;
+}
+
+/* Users filter */
+
+.usersFilter {
+  margin-left: 1.5rem;
+}
+
+.usersFilter__filter {
+  display: flex;
+}
+
+.usersFilter__viewBy {
+  margin-right: 1rem;
+}
+
+.usersFilter__search {
+  border: 1px solid rgb(221, 221, 221);
+  width: 70%;
+  margin: 0 10%;
+  margin-top: 5%;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.usersFilter__search > input {
+  border: none;
+  padding: 0.6rem;
+  padding-left: 0.4rem;
+  font-size: 1rem;
+  outline-width: 0;
+  width: 85%;
+}
+
+.usersFilter__searchIcon {
+  font-size: 1.5rem !important;
+  color: rgb(170, 170, 170);
+  margin-left: 0.5rem;
+}
+
+/* New user form */
+.newUserForm {
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.newUserForm__header {
+  border-bottom: 2px solid rgb(226, 226, 226);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+a:focus {
+  outline: none;
+}
+
+.newUserForm__title {
+  text-align: center;
+}
+
+.newUserForm__backButton {
+  padding: 0.3rem;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.newUserForm__previousButton {
+  font-size: 2.5rem !important;
+  cursor: pointer;
+}
+
+.newUserForm {
+  width: 100%;
+}
+
+.newUserForm__form {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  align-items: center;
+  padding-bottom: 0;
+}
+
+.newUserForm__form > input {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(160, 159, 159);
+  margin-bottom: 0.5rem;
+  width: 260px;
+  font-size: 1rem;
+  outline-width: 0;
+}
+
+.newUserForm__form > button {
+  width: 130px;
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(172, 171, 171);
+  background: #3ea4fb;
+  outline-width: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+}
+
+.newUserForm__info {
+  text-align: center;
+}
+.newUserForm__link {
+  display: inline-block;
+  color: rgb(14, 14, 14);
+  font-weight: 600;
+}
+
+/* User Transaction */
+
+.userTransaction {
+  width: 80% !important;
+  margin: 0 15%;
+  margin-top: 5%;
+}
+.userTransaction__tableHead {
+  color: rgb(103, 39, 39) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
+
+.userTransaction__tablebody {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+}
+
+/* user order detail */
+.userOrderDetail__mainRow {
+  background: rgb(237, 237, 237) !important;
+}
+
+.userOrderDetail {
+  margin-top: 60px;
+  margin-left: 2.5rem;
+  height: 70vh;
+  width: 90vw;
+  background-color: rgb(255, 255, 255);
+  padding-top: 0.8rem;
+  overflow: hidden;
+  font-size: 1.3rem;
+}
+
+@media screen and (min-width: 765px) {
+  .userOrderDetail {
+    width: 92vw;
+    margin-top: 60px;
+    margin-left: 30px;
+    margin-top: 75px;
+  }
+}
+@media screen and (min-width: 1020px) {
+  .users {
+    width: 68vw;
+    margin-left: 35px;
+    /* margin-top: 60px; */
+  }
+  .userOrderDetail {
+    width: 70vw;
+  }
+}
+
+.MuiTableContainer-root {
+  overflow-x: scroll !important;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar {
+  height: 12px !important;
+}
+.MuiTableContainer-root::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar-thumb {
+  background-color: darkgrey !important;
+  outline: 1px solid slategrey !important;
+}

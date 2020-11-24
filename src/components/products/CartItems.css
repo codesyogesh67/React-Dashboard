@@ -1,0 +1,35 @@
+.cartItems__proceedButton {
+  padding: 0.5rem;
+  margin: 1rem 50%;
+  width: 120px;
+  border-radius: 0.5rem;
+  outline-width: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid rgb(216, 216, 216);
+  font-weight: 400;
+}
+
+.cartItems__proceedButton:hover {
+  background: orange;
+  color: white;
+}
+
+.cartItems__quantity {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartItems__deleteIcon {
+  height: 1rem !important;
+
+  margin-top: 0.2rem;
+  border-radius: 0.3rem;
+  background: rgb(187, 67, 67);
+  cursor: pointer;
+
+  font-size: 1rem !important;
+  fill: rgb(252, 251, 251) !important;
+  font-weight: 600 !important;
+}
