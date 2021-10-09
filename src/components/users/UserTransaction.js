@@ -1,42 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  Paper,
+  TableCell,
+  TableContainer,
+} from "@mui/material";
+
 import db from "../../firebase";
 
 function UserTransaction({ username, email, role }) {
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
-    if (role === "Employee" || role === "Manager") {
-      db.collection("orders")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => {
-          const orders = snapshot.docs.filter(
-            (doc) => doc.data().approveBy === email
-          );
-          setUserOrders(
-            orders.map((order) => ({ id: order.id, data: order.data() }))
-          );
-        });
-    } else {
-      db.collection("orders")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => {
-          const orders = snapshot.docs.filter(
-            (doc) => doc.data().customer.email === email
-          );
-          setUserOrders(
-            orders.map((order) => ({ id: order.id, data: order.data() }))
-          );
-        });
-    }
-  }, []);
+    db.collection("orders")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        const orders = snapshot.docs.filter(
+          (doc) => doc.data().customer.email === email
+        );
+        setUserOrders(
+          orders.map((order) => ({ id: order.id, data: order.data() }))
+        );
+      });
+  }, [email]);
 
   let amount = [];
   userOrders.map((userOrder) => {
@@ -62,39 +52,27 @@ function UserTransaction({ username, email, role }) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className="userTransaction__tablebody">
           <TableRow>
-            <TableCell className="userTransaction__tablebody" align="center">
-              {userOrders.length}
-            </TableCell>
-            <TableCell className="userTransaction__tablebody" align="center">
-              $ {totalOrderAmount}
-            </TableCell>
-            <TableCell align="center" className="userTransaction__tablebody">
+            <TableCell align="center">{userOrders.length}</TableCell>
+            <TableCell align="center">$ {totalOrderAmount}</TableCell>
+            <TableCell align="center">
               {userOrders.length
                 ? new Date(lastOrder?.toDate()).toLocaleDateString()
                 : "-"}
             </TableCell>
           </TableRow>
-          {userOrders.length > 0 && (
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell>
-                <Link
-                  to={{
-                    pathname: `/${username}/orderDetail`,
-                    state: { email, orders: userOrders },
-                  }}
-                  className="userTransaction__order"
-                >
-                  Go to Order Detail >>>>>
-                </Link>
-              </TableCell>
-            </TableRow>
-          )}
         </TableBody>
       </Table>
+      <Link
+        to={{
+          pathname: `/${username}/orderDetail`,
+          state: { email, username, orders: userOrders },
+        }}
+        className="userTransaction__order"
+      >
+        Go to Order Detail >>>>>
+      </Link>
     </TableContainer>
   );
 }

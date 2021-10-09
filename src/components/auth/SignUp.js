@@ -1,75 +1,142 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import db, { auth } from "../../firebase";
+import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 
+import { Formik } from "formik";
+import db, { auth } from "../../firebase";
+
+import Message from "../header/Message";
+
 function SignUp() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const history = useHistory();
 
-  const signup = (e) => {
-    e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        db.collection("users").add({
-          first_name: firstName.toLowerCase(),
-          last_name: lastName.toLowerCase(),
-          email: auth.user.email,
-          username: username.toLowerCase(),
-          id: auth.user.uid,
-          role: "Customer",
-        });
-        history.push("/login");
-      })
-      .catch((error) => alert(error.message));
-  };
+  const [message, setMessage] = useState({ status: false, body: "" });
 
   return (
-    <div className="signup">
-      <h2 className="signup__title">SignUp</h2>
-      <form className="signup__form">
-        <input
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          placeholder="First Name..."
-          type="name"
-        />
-        <input
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          placeholder="Last Name..."
-          type="name"
-        />
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username..."
-          type="name"
-        />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email..."
-          type="email"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password..."
-          type="password"
-        />
-        <button onClick={signup}>Sign Up</button>
-      </form>
-      <div className="signup__info">
-        Already a member.{" "}
-        <Link to="login">
-          <p className="signup__link">Log in</p>
-        </Link>
+    <div className="signUp">
+      <div className="signUp__wrapper">
+        <div className="signUp__container">
+          {message?.status && <Message message={message?.body} />}
+          <h2 className="signUp__title">Sign Up </h2>
+          <Formik
+            initialValues={{
+              first_name: "",
+              last_name: "",
+              username: "",
+              email: "",
+              password: "",
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              auth
+                .createUserWithEmailAndPassword(values.email, values.password)
+                .then((authUser) => {
+                  console.log(authUser);
+                  setTimeout(() => {
+                    db.collection("users").add({
+                      first_name: values.first_name,
+                      last_name: values.last_name,
+                      username: values.username,
+                      role: "Customer",
+                      email: authUser.user.email,
+                      id: authUser.user.uid,
+                    });
+                  }, 2000);
+                  setSubmitting(false);
+                })
+                .catch((error) =>
+                  setMessage({ status: true, body: error.message })
+                );
+            }}
+            validationSchema={Yup.object().shape({
+              email: Yup.string()
+                .email()
+                .required("Required")
+                .matches(
+                  /([^\s@]+@[^\s@]+\.[^\s@]{2,})/,
+                  "Invalid email format"
+                ),
+              password: Yup.string()
+                .required("Required")
+                .min(6, "Password must be 6 characters long.")
+                .matches(/(?=.*[0-9])/, "Password must contain a number."),
+            })}
+          >
+            {(props) => {
+              const {
+                values,
+                touched,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+              } = props;
+
+              return (
+                <form className="signUp__form" onSubmit={handleSubmit}>
+                  <label>First Name</label>
+                  <input
+                    name="first_name"
+                    type="name"
+                    onChange={handleChange}
+                    value={values.first_name}
+                  />
+
+                  <label>Last Name</label>
+                  <input
+                    name="last_name"
+                    type="name"
+                    onChange={handleChange}
+                    value={values.last_name}
+                  />
+                  <label>Username</label>
+                  <input
+                    name="username"
+                    type="name"
+                    onChange={handleChange}
+                    value={values.username}
+                  />
+                  <label>Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    onChange={handleChange}
+                    value={values.email}
+                    onBlur={handleBlur}
+                  />
+                  {errors.email && touched.email && (
+                    <div className="errors-feedback">{errors.email}</div>
+                  )}
+
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={errors.email && touched.email && "error"}
+                    value={values.password}
+                  />
+                  {errors.password && touched.password && (
+                    <div className="errors-feedback">{errors.password}</div>
+                  )}
+                  <button
+                    type="submit"
+                    className="signUp__button"
+                    disabled={isSubmitting}
+                  >
+                    Sign Up
+                  </button>
+                </form>
+              );
+            }}
+          </Formik>
+
+          <p className="signUp__footerText">
+            Already a member? <Link to="/login">Log in now</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

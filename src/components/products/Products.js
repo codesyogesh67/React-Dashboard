@@ -3,20 +3,16 @@ import ProductsList from "./ProductsList";
 import AddProducts from "./AddProducts";
 import "./Products.css";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice";
+import { selectUser, selectUserInfo } from "../../features/userSlice";
 import CartItems from "./CartItems";
 
 function Products() {
-  const { userInfo } = useSelector(selectUser);
+  const userInfo = useSelector(selectUserInfo);
 
   return (
     <div className="products">
       <div className="mainbody">
-        {userInfo?.role === "Manager" || userInfo?.role === "Employee" ? (
-          <AddProducts />
-        ) : (
-          <CartItems />
-        )}
+        {userInfo?.role === "Manager" ? <AddProducts /> : <CartItems />}
 
         <ProductsList />
       </div>

@@ -1,0 +1,14 @@
+.MuiAlert-filledError {
+  background-color: rgba(216, 213, 213, 0.5) !important;
+  color: red !important;
+
+  padding: -2px !important;
+}
+
+.message {
+  display: inline-block;
+}
+
+.MuiAlert-root {
+  padding: 2px !important;
+}

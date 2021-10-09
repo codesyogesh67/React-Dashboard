@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Box from "@material-ui/core/Box";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import React, { useState } from "react";
+import {
+  Box,
+  Collapse,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 export default function CollapsibleTable(props) {
   const { orders } = props.location.state;
+
+  const history = useHistory();
 
   let orderList = [];
   orderList.push(
@@ -34,28 +36,40 @@ export default function CollapsibleTable(props) {
       })
     )
   );
+  const goback = () => {
+    history.goBack();
+  };
 
   return (
     <div className="userOrderDetail">
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell align="center">Order</TableCell>
-              <TableCell align="center">Date Created</TableCell>
-              <TableCell align="center">Total Items</TableCell>
-              <TableCell align="center">Total Amount</TableCell>
-              <TableCell align="center">Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orderList[0].map((order) => (
-              <UserOrderDetail key={order.id} data={order.data} id={order.id} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div className="userOrderDetail__container">
+        <div className="userOrderDetail__back">
+          <p onClick={goback}>{props?.location.state.username}</p>
+          <span>/ OrderDetail </span>
+        </div>
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Order</TableCell>
+                <TableCell align="center">Date Created</TableCell>
+                <TableCell align="center">Total Items</TableCell>
+                <TableCell align="center">Total Amount</TableCell>
+                <TableCell align="center">Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orderList[0].map((order) => (
+                <UserOrderDetail
+                  key={order.id}
+                  data={order.data}
+                  id={order.id}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }
@@ -71,16 +85,12 @@ function UserOrderDetail(props) {
   return (
     <React.Fragment>
       <TableRow className="userOrderDetail__mainRow">
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          onClick={() => setOpen(!open)}
+        >
           {id}
         </TableCell>
         <TableCell align="center">
@@ -90,7 +100,17 @@ function UserOrderDetail(props) {
         </TableCell>
         <TableCell align="center">{totalQuantity}</TableCell>
         <TableCell align="center">$ {totalPrice}</TableCell>
-        <TableCell align="center">{status}</TableCell>
+        <TableCell align="center">
+          <span
+            className={
+              status === "Processing"
+                ? "status__processing"
+                : "status__processed"
+            }
+          >
+            {status}
+          </span>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -107,7 +127,7 @@ function UserOrderDetail(props) {
                     <TableCell align="center">Product Id</TableCell>
                     <TableCell align="center">Product Name</TableCell>
                     <TableCell align="center">Quantity</TableCell>
-                    <TableCell align="center">Total Amount</TableCell>
+                    <TableCell align="center">Price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -121,8 +141,10 @@ function UserOrderDetail(props) {
                           {productId}
                         </TableCell>
                         <TableCell align="center">{name}</TableCell>
-                        <TableCell align="center">$ {price}</TableCell>
-                        <TableCell align="center">{quantity}</TableCell>
+                        <TableCell align="center"> {quantity}</TableCell>
+                        <TableCell align="center">
+                          $ {price * quantity}
+                        </TableCell>
                       </TableRow>
                     )
                   )}

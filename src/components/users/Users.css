@@ -1,10 +1,17 @@
 .users {
-  overflow: scroll;
-  width: 100%;
   background-color: rgb(255, 255, 255);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
-/* Users Header */
 
+.users__container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  max-width: 1050px;
+}
 .users__button {
   padding: 0.3rem;
   border-radius: 0.3rem;
@@ -28,16 +35,17 @@
   width: 120px;
 }
 
+/* Users Header */
 .usersHeader {
   display: flex;
-  flex-direction: column;
-  padding: 0.7rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  border-bottom: 1px solid rgb(201, 201, 201);
 }
 
-.usersHeader__title {
-  margin-bottom: 2rem;
-  border-bottom: 2px solid rgb(226, 226, 226);
-}
 .usersHeader__links,
 .usersFilter__roles {
   display: flex;
@@ -45,9 +53,40 @@
   margin-bottom: 0.8rem;
 }
 
+.usersHeader__searchForm {
+  display: flex;
+  width: 70vw;
+  border: 1px solid rgb(183, 183, 184);
+  border-radius: 8px;
+}
+
+.usersHeader__searchForm > input {
+  padding: 10px;
+  flex: 1;
+  border-radius: 6px;
+  border: none;
+  padding-left: 20px;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.usersHeader__searchForm > button {
+  border: transparent;
+  background: transparent;
+  width: 30px;
+  color: rgb(143, 143, 143);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.usersHeader__addButton,
+.users__searchButton {
+  cursor: pointer;
+  margin-right: 15px;
+}
+
 .usersList__list {
   padding-top: 2rem;
-  overflow: scroll;
 }
 
 a {
@@ -101,7 +140,15 @@ a {
 }
 
 /* New user form */
+
 .newUserForm {
+  display: flex;
+  justify-content: center;
+}
+
+.newUserForm__container {
+  width: 100vw;
+  max-width: 1050px;
   display: flex;
   flex-direction: column;
   background: white;
@@ -182,69 +229,74 @@ a:focus {
 
 /* User Transaction */
 
-.userTransaction {
-  width: 80% !important;
-  margin: 0 15%;
-  margin-top: 5%;
-}
 .userTransaction__tableHead {
   color: rgb(103, 39, 39) !important;
   font-weight: 600 !important;
-  font-size: 1rem !important;
+  font-size: 0.8rem !important;
+
+  padding: 8px !important;
 }
 
 .userTransaction__tablebody {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   font-weight: 600 !important;
 }
 
+.userTransaction__tablebody > tr > td {
+  padding: 5px !important;
+}
+
+.userTransaction__order {
+  margin: 10px 10px;
+  float: right;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgb(128, 198, 128);
+
+  font-size: 0.8rem;
+}
 /* user order detail */
 .userOrderDetail__mainRow {
   background: rgb(237, 237, 237) !important;
 }
 
+/* User order detail */
+
 .userOrderDetail {
-  margin-top: 60px;
-  margin-left: 2.5rem;
-  height: 70vh;
-  width: 90vw;
+  display: flex;
+  justify-content: center;
+}
+
+.userOrderDetail__container {
+  width: 100vw;
+  max-width: 1050px;
+}
+
+.userOrderDetail__mainRow :nth-child(1) {
+  cursor: pointer;
+}
+
+.userOrderDetail {
+  height: 100%;
+
   background-color: rgb(255, 255, 255);
-  padding-top: 0.8rem;
-  overflow: hidden;
+  padding: 20px;
   font-size: 1.3rem;
 }
 
-@media screen and (min-width: 765px) {
-  .userOrderDetail {
-    width: 92vw;
-    margin-top: 60px;
-    margin-left: 30px;
-    margin-top: 75px;
-  }
-}
-@media screen and (min-width: 1020px) {
-  .users {
-    width: 68vw;
-    margin-left: 35px;
-    /* margin-top: 60px; */
-  }
-  .userOrderDetail {
-    width: 70vw;
-  }
+.userOrderDetail__back {
+  padding: 10px;
+  margin-bottom: 50px;
+  display: flex;
+
+  align-items: center;
 }
 
-.MuiTableContainer-root {
-  overflow-x: scroll !important;
-}
-
-.MuiTableContainer-root::-webkit-scrollbar {
-  height: 12px !important;
-}
-.MuiTableContainer-root::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
-}
-
-.MuiTableContainer-root::-webkit-scrollbar-thumb {
-  background-color: darkgrey !important;
-  outline: 1px solid slategrey !important;
+.userOrderDetail__back > p {
+  text-transform: capitalize;
+  font-size: 1rem;
+  padding: 10px;
+  color: blue;
+  cursor: pointer;
 }

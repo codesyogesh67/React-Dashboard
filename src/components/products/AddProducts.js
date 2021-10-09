@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import Products from "./Products";
 import db from "../../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import "./Products.css";
-import { selectProductUser } from "../../features/productSlice";
 
 function AddProducts() {
   const [product, setProduct] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const user = useSelector(selectUser);
-  const { userId } = useSelector(selectProductUser);
 
   const submitProduct = (e) => {
     e.preventDefault();
@@ -38,18 +35,30 @@ function AddProducts() {
           value={product}
           onChange={(e) => setProduct(e.target.value)}
           placeholder="Name of product"
+          type="text"
         />
         <input
           value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          onChange={(e) =>
+            e.target.value.length < 6 && setPrice(Number(e.target.value))
+          }
           placeholder="Price"
+          type="number"
         />
         <input
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) =>
+            e.target.value.length < 5 && setQuantity(Number(e.target.value))
+          }
           placeholder="Quantity"
+          type="number"
         />
-        <button onClick={submitProduct}>Save</button>
+        <button
+          disabled={price < 1 || quantity < 1 || product.length < 1}
+          onClick={submitProduct}
+        >
+          Save
+        </button>
       </form>
     </>
   );

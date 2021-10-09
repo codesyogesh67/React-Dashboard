@@ -1,17 +1,25 @@
 .userForm {
-  overflow: scroll;
-  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.userForm__title {
-  text-transform: capitalize;
+.userForm__container {
+  max-width: 1050px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
 .userForm__form {
-  margin: 5% 20%;
+  padding: 40px;
+  padding-top: 80px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 67vw;
+  padding-bottom: 10px;
 }
 .userForm__row {
   display: flex;
@@ -31,28 +39,47 @@
   outline-width: 0;
 }
 
-.userForm__buttons {
-  display: flex;
+.userForm__email {
+  padding: 0.5rem 0;
+
+  margin-bottom: 0.5rem;
+  width: 300px;
+
+  font-size: 1rem;
 }
 
-.userForm__buttons > button,
-.userForm__back {
-  width: 100px;
+.userForm__buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-evenly;
+}
 
-  margin-left: 15%;
-  margin-top: 1.5rem;
-  padding: 0.3rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(172, 171, 171);
-  background: #3ea4fb;
-  outline-width: 0;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
+.userForm__buttons > button {
+  margin-right: 20px;
+}
+
+.userForm__deleteUser {
+  width: 180px;
+  background: transparent;
   border: none;
+  color: rgb(247, 0, 0);
   cursor: pointer;
 }
 
+/* user delete modal */
+
+.userDeleteModal__box {
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 10px 10px 10px rgb(141, 140, 140) !important;
+}
+
+.userDeleteModal__buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+/* 
 @media screen and (min-width: 765px) {
   .userForm__form {
     margin: 5% 30%;
@@ -60,4 +87,4 @@
   .userForm__row > input {
     width: 350px;
   }
-}
+} */

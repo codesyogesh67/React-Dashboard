@@ -1,62 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import { selectUser, removeStatusReducer } from "../../features/userSlice";
+
+import {
+  selectPrevUsersList,
+  updateFilterdList,
+} from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import db from "../../firebase";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import {
+  updateFilterStatus,
+  selectSearchIcon,
+  updateSearch,
+} from "../../features/extraSlice";
+import GroupIcon from "@mui/icons-material/Group";
 
 function UsersHeader() {
-  const [csvData, setCsvData] = useState({});
   const dispatch = useDispatch();
+  const [input, setInput] = useState("");
+  const list = useSelector(selectPrevUsersList);
+  const searchIcon = useSelector(selectSearchIcon);
 
-  useEffect(() => {
-    const csvData = db.collection("users").onSnapshot((snapshot) => {
-      setCsvData(snapshot.docs?.map((doc) => doc.data()));
-    });
-    return csvData;
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const fileType =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  const fileExtension = ".xlsx";
-  const user = useSelector(selectUser);
-  const fileName =
-    user.userInfo?.first_name + " " + new Date().toLocaleDateString();
-
-  const exportToCSV = (csvData, fileName) => {
-    const ws = XLSX.utils.json_to_sheet(csvData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
-  };
-
-  const removeButton = () => {
-    dispatch(removeStatusReducer(true));
+    if (input !== "") {
+      const filteredList = list.filter(
+        (list) =>
+          list.first_name.includes(input) ||
+          list.last_name.includes(input) ||
+          list.email.includes(input)
+      );
+      dispatch(updateFilterdList(filteredList));
+      dispatch(updateFilterStatus(true));
+    }
   };
 
   return (
     <div className="usersHeader">
-      <h2 className="usersHeader__title">Users</h2>
-      <div className="usersHeader__links">
+      {searchIcon ? (
+        <form className="usersHeader__searchForm" onSubmit={handleSubmit}>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Search"
+          />
+        </form>
+      ) : (
+        <h2 className="usersHeader__title">Users</h2>
+      )}
+      <div className="usersHeader__button">
         <Link to="/users/add-new-user">
-          <button className="users__button">New</button>
+          <PersonAddAltIcon className="usersHeader__addButton" />
         </Link>
-
-        <button className="users__button" onClick={removeButton}>
-          Remove
-        </button>
-
-        <button
-          className="users__button users__buttonExcel"
-          onClick={(e) => {
-            exportToCSV(csvData, fileName);
-            dispatch(removeStatusReducer(false));
-          }}
-        >
-          Export to Excel
-        </button>
+        {searchIcon ? (
+          <GroupIcon
+            className="usersHeader__searchButton"
+            onClick={() => {
+              dispatch(updateSearch());
+              dispatch(updateFilterStatus(false));
+              dispatch(updateFilterdList([]));
+            }}
+          />
+        ) : (
+          <PersonSearchIcon
+            onClick={() => dispatch(updateSearch())}
+            className="usersHeader__searchButton"
+          />
+        )}
       </div>
     </div>
   );

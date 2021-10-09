@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   TableContainer,
   Table,
@@ -7,26 +7,44 @@ import {
   TableCell,
   Paper,
   TableBody,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { removeStatus } from "../../features/userSlice";
-import DeleteIcon from "@material-ui/icons/Delete";
+import {
+  selectFilteredList,
+  selectPrevUsersList,
+} from "../../features/userSlice";
+import DeleteIcon from "@mui/icons-material/Delete";
 import db from "../../firebase";
+import { makeStyles } from "@mui/styles";
+import { selectFilterStatus } from "../../features/extraSlice";
 
-function UsersList({ usersList }) {
-  const removeStatusInfo = useSelector(removeStatus);
-  // const user = JSON.parse(localStorage.getItem("user"));
-  // const userId = useSelector(selectUserId);
+const useStyles = makeStyles({
+  container: {
+    maxHeight: 440,
+  },
+});
 
-  const deleteUser = (id) => {
-    db.collection("users").doc(id).delete();
-  };
+function UsersList() {
+  const classes = useStyles();
+  const [list, setList] = useState([]);
+
+  const data = useSelector(selectPrevUsersList);
+  const filteredList = useSelector(selectFilteredList);
+  const filterStatus = useSelector(selectFilterStatus);
+
+  useEffect(() => {
+    if (filterStatus) {
+      setList(filteredList);
+    } else {
+      setList(data);
+    }
+  }, [filteredList]);
 
   return (
     <div className="usersList__list">
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className={classes.container}>
         <Table stickyHeader size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
@@ -37,7 +55,7 @@ function UsersList({ usersList }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {usersList.map(
+            {list?.map(
               ({
                 id,
                 data: { first_name, last_name, email, username, role },
@@ -65,11 +83,6 @@ function UsersList({ usersList }) {
                   <TableCell align="center"> {username}</TableCell>
                   <TableCell align="center">{email}</TableCell>
                   <TableCell align="center">{role}</TableCell>
-                  {removeStatusInfo && (
-                    <TableCell align="center">
-                      <DeleteIcon onClick={() => deleteUser(id)} />
-                    </TableCell>
-                  )}
                 </TableRow>
               )
             )}

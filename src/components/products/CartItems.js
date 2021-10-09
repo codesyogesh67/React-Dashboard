@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 import {
   Paper,
   TableContainer,
@@ -10,36 +10,37 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from "@material-ui/core";
+} from "@mui/material";
 import "./CartItems.css";
 import db from "../../firebase";
 import { useSelector } from "react-redux";
 
-import { selectUserInfo } from "../../features/userSlice";
+import { selectUserInfo, selectUser } from "../../features/userSlice";
 import firebase from "firebase";
 
 function CartItems() {
   const [cartList, setCartList] = useState([]);
-  const [docIds, setDocIds] = useState([]);
-  const { userInfo } = useSelector(selectUserInfo);
+  const user = useSelector(selectUser);
+  const userInfo = useSelector(selectUserInfo);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
-
-  const id = JSON.parse(localStorage.getItem("userdocId"));
-  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("userInfo", userInfo);
 
   useEffect(() => {
-    db.collection("users")
-      .doc(id)
-      .collection("cartItems")
-      .onSnapshot((snapshot) => {
-        setCartList(
-          snapshot.docs.map((doc) => ({
-            cartItemId: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
+    if (userInfo) {
+      db.collection("users")
+        .doc(userInfo?.id)
+        .collection("cartItems")
+        .onSnapshot((snapshot) => {
+          setCartList(
+            snapshot.docs.map((doc) => ({
+              cartItemId: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+    }
+
     totalAmount();
     totalItems();
   }, []);
@@ -56,7 +57,7 @@ function CartItems() {
 
     const docsdeleted = cartList?.map((doc) => {
       db.collection("users")
-        .doc(id)
+        .doc(userInfo?.id)
         .collection("cartItems")
         .doc(doc.cartItemId)
         .delete();
@@ -65,7 +66,7 @@ function CartItems() {
 
   const increaseQuantity = (cartItemId, quantity) => {
     db.collection("users")
-      .doc(id)
+      .doc(userInfo?.id)
       .collection("cartItems")
       .doc(cartItemId)
       .update({
@@ -76,7 +77,7 @@ function CartItems() {
   const decreaseQuantity = (cartItemId, quantity) => {
     if (quantity > 1) {
       db.collection("users")
-        .doc(id)
+        .doc(userInfo?.id)
         .collection("cartItems")
         .doc(cartItemId)
         .update({
@@ -86,39 +87,43 @@ function CartItems() {
   };
 
   const totalAmount = () => {
-    db.collection("users")
-      .doc(id)
-      .collection("cartItems")
-      .onSnapshot((snapshot) => {
-        const totalprice = snapshot.docs.map(
-          (doc) => Number(doc.data().price) * Number(doc.data().quantity)
-        );
+    if (userInfo) {
+      db.collection("users")
+        .doc(userInfo?.id)
+        .collection("cartItems")
+        .onSnapshot((snapshot) => {
+          const totalprice = snapshot.docs.map(
+            (doc) => Number(doc.data().price) * Number(doc.data().quantity)
+          );
 
-        setTotalPrice(
-          totalprice.reduce((a, b) => {
-            return a + b;
-          }, 0)
-        );
-      });
+          setTotalPrice(
+            totalprice.reduce((a, b) => {
+              return a + b;
+            }, 0)
+          );
+        });
+    }
   };
 
   const totalItems = () => {
-    db.collection("users")
-      .doc(id)
-      .collection("cartItems")
-      .onSnapshot((snapshot) => {
-        const totalquantity = snapshot.docs.map((doc) => doc.data().quantity);
-        setTotalQuantity(
-          totalquantity.reduce((a, b) => {
-            return a + b;
-          }, 0)
-        );
-      });
+    if (userInfo) {
+      db.collection("users")
+        .doc(userInfo.id)
+        .collection("cartItems")
+        .onSnapshot((snapshot) => {
+          const totalquantity = snapshot.docs.map((doc) => doc.data().quantity);
+          setTotalQuantity(
+            totalquantity.reduce((a, b) => {
+              return a + b;
+            }, 0)
+          );
+        });
+    }
   };
 
   const deleteCartItem = (cartItemId) => {
     db.collection("users")
-      .doc(id)
+      .doc(userInfo.id)
       .collection("cartItems")
       .doc(cartItemId)
       .delete();

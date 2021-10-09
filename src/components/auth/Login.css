@@ -1,50 +1,85 @@
-.login {
-  padding: 1.2rem 0;
-  width: 100%;
+.login__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100vw;
+  margin-top: 10vh;
+  padding: 2rem 2rem;
+}
+
+.login__container {
+  padding: 30px;
+  border: 1px solid rgb(174, 174, 174);
+  border-radius: 0.4rem;
+  box-shadow: -5px 10px #e6e6e6;
+  border-style: box;
+  width: 60vw;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.form {
+  margin-top: 8rem;
 }
 .login__title {
-  text-transform: uppercase;
   text-align: center;
 }
 
 .login__form {
   display: flex;
   flex-direction: column;
-  padding: 3rem;
-  align-items: center;
-  padding-bottom: 0;
+  padding: 1rem;
 }
 
-.login__form > input {
-  padding: 0.5rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(160, 159, 159);
-  margin-bottom: 0.5rem;
-  width: 260px;
-  font-size: 1rem;
-  outline-width: 0;
+.login__form label {
+  padding: 0.2rem;
+  color: rgb(80, 80, 80);
+  font-size: 0.8rem;
+}
+
+.login__form input:focus {
+  outline: none;
+}
+
+.login__form input {
+  border: none;
+  padding: 0.4rem;
+  margin: 0.2rem 0;
+  border-radius: 0.2rem;
+  background-color: rgb(238, 238, 238);
 }
 
 .login__form > button {
-  width: 130px;
-  margin-top: 0.5rem;
-  padding: 0.3rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(172, 171, 171);
-  background: #3ea4fb;
-  outline-width: 0;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
+  color: rgb(249, 249, 249);
+  background: rgb(36, 36, 36);
+  padding: 0.5rem;
+  margin-top: 0.6em;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  outline: none;
   border: none;
+  cursor: pointer;
+}
+.login__form > button:disabled {
+  opacity: 0.6;
 }
 
-.login__info {
-  text-align: center;
-  margin-top: 0.8rem;
+.login__footerText {
+  margin-left: 1.2rem;
 }
-.login__link {
-  display: inline-block;
-  color: rgb(14, 14, 14);
-  font-weight: 600;
+.errors-feedback {
+  font-size: 0.8rem;
+  color: red;
+  padding: 0.2rem;
+}
+.errors {
+  border: 1px solid red;
+}
+
+@media screen and (max-width: 600px) {
+  .login__container {
+    width: 100%;
+  }
 }

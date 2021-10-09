@@ -3,18 +3,26 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    removeStatus: false,
+    user: null,
+    userInfo: "",
+    usersList: [],
+    prevUsersList: [],
+    filteredList: [],
   },
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
     },
-    userInfo: (state, action) => {
-      state.user.userInfo = action.payload;
+
+    updateUserInfo: (state, action) => {
+      state.userInfo = action.payload;
     },
-    removeStatusReducer: (state, action) => {
-      console.log(action.payload);
-      state.removeStatus = action.payload;
+
+    updatePrevUsersList: (state, action) => {
+      state.prevUsersList = action.payload;
+    },
+    updateFilterdList: (state, action) => {
+      state.filteredList = action.payload;
     },
 
     setUser: (state, action) => {
@@ -23,6 +31,9 @@ export const userSlice = createSlice({
     },
     logout: (state, action) => {
       state.user = null;
+      state.prevUsersList = [];
+      state.usersList = [];
+      state.userInfo = null;
     },
   },
 });
@@ -30,14 +41,18 @@ export const userSlice = createSlice({
 export const {
   login,
   logout,
-  userInfo,
+  updateUserInfo,
+
   setManager,
-  removeStatusReducer,
+
+  updatePrevUsersList,
+  updateFilterdList,
 } = userSlice.actions;
 
-export const removeStatus = (state) => state.user.removeStatus;
 export const selectUserEmail = (state) => state.user.email;
 export const selectUser = (state) => state.user.user;
-export const selectUserInfo = (state) => state.user.user;
-export const selectUserId = (state) => state.user.user.userId;
+export const selectUserInfo = (state) => state.user.userInfo;
+export const selectFilteredList = (state) => state.user.filteredList;
+export const selectPrevUsersList = (state) => state.user.prevUsersList;
+
 export default userSlice.reducer;

@@ -1,57 +1,94 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+div {
+  margin: 0;
+  padding: 0;
 }
 
 .app {
   display: flex;
-  flex-direction: column;
-  padding: 0;
   height: 100vh;
+  overflow: hidden;
 }
-.app__sidebar {
+
+.app::-webkit-scrollbar {
   display: none;
 }
+
 .app__mainbody {
-  flex: 1;
+  height: 100vh;
+
   display: flex;
   flex-direction: column;
-  margin-left: 0;
+
+  overflow: hidden;
 }
 
-.app__header {
-  position: fixed;
-  height: 90px;
-  z-index: 100;
-  background: white;
-  border-bottom: 2px solid rgb(226, 226, 226);
-}
-.app__mainarea {
-  margin-top: 90px;
-  padding-top: 35px;
-  height: 100%;
+.app__main {
+  margin-top: 10px;
+  height: 100vh;
+  overflow: scroll;
+  width: 100vw;
 }
 
-@media screen and (min-width: 1024px) {
-  .app {
-    display: flex;
+.dashboard__title,
+.orders__title,
+.addproducts__title,
+.cartItems__title,
+.productsList__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px;
+  padding-bottom: 30px;
+}
+
+/* table th css */
+.css-nc6t7a-MuiTableCell-root,
+.css-1h37f49-MuiTableCell-root {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  border-bottom: none;
+}
+/* 
+.css-xn82ks-MuiTable-root {
+  width: 90vw !important;
+}
+
+@media screen and (max-width: 480px) {
+  .css-xn82ks-MuiTable-root {
+    width: 80vw !important;
   }
-  .app__sidebar {
-    display: block;
-    height: 100%;
-    flex: 0;
-    border-right: 2px solid rgb(226, 226, 226);
-    box-shadow: 1px 1px rgb(226, 226, 226);
-    position: fixed;
-    width: 26vw;
-    overflow: hidden;
-  }
-  .app__mainbody {
-    margin-left: 26vw;
-    flex: 1;
-  }
-  .app__header {
-    border-bottom: 2px solid rgb(226, 226, 226);
-    border-left: 2px solid rgb(226, 226, 226);
-  }
+} */
+
+button {
+  padding: 0.5rem;
+  width: 120px;
+  border-radius: 0.5rem;
+  outline-width: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid rgb(216, 216, 216);
+  font-weight: 400;
+}
+
+.status__processing {
+  background: rgba(216, 128, 128, 0.6);
+  padding: 7px;
+  border-radius: 10px;
+  color: red;
+  font-weight: 400;
+  border: white;
+  height: 10px !important;
+}
+
+.status__processed {
+  background: rgba(110, 153, 110, 0.6);
+  border: none;
+  padding: 7px;
+  color: green;
+  border-radius: 10px;
 }
