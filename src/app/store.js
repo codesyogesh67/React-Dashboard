@@ -15,7 +15,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-
   order: orderReducer,
   extra: extraReducer,
   message: messageReducer,

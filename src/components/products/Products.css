@@ -4,6 +4,7 @@
   background-color: white;
 
   padding: 20px;
+  overflow: scroll;
 }
 
 /* .products::-webkit-scrollbar-track {
@@ -75,6 +76,12 @@
   border-radius: 0.3rem;
   text-align: center;
   outline-width: 0;
+}
+.productList__editName {
+  width: 100%;
+}
+.productsList__name {
+  text-transform: capitalize;
 }
 
 .productList__editSave {

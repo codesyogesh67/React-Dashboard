@@ -20,8 +20,6 @@
   cursor: pointer;
   border-radius: 3px;
   border: 1px solid rgba(223, 222, 222, 0.5);
-
-  /* background: rgb(201, 201, 201); */
 }
 
 .sidebar__wrapper {
@@ -40,8 +38,8 @@
 .sidebar__header {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+
   margin-bottom: 40px;
 }
 
@@ -61,12 +59,13 @@
 .sidebar__links {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .sidebar__eachLink {
   display: flex;
-  padding: 10px;
-  padding-left: 20px;
+
+  padding-left: 50px;
   align-items: center;
   font-size: 1.2rem;
 
@@ -84,4 +83,8 @@
   margin-right: 5px;
 }
 
-/* logout */
+@media only screen and (max-width: 600px) {
+  .sidebar__wrapper {
+    padding: 1rem;
+  }
+}

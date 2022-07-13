@@ -114,7 +114,7 @@ function ProductsList() {
                         <TableCell align="center">
                           {" "}
                           <input
-                            className="productList__editInput"
+                            className="productList__editInput productList__editName"
                             value={name}
                             name="name"
                             onChange={(e) =>
@@ -148,7 +148,9 @@ function ProductsList() {
                       </>
                     ) : (
                       <>
-                        <TableCell align="left">{name}</TableCell>
+                        <TableCell className="productsList__name" align="left">
+                          {name}
+                        </TableCell>
                         <TableCell align="center"> $ {price}</TableCell>
                         {userInfo?.role === "Manager" && (
                           <TableCell align="center">{quantity}</TableCell>

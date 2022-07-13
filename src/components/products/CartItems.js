@@ -16,7 +16,7 @@ import db from "../../firebase";
 import { useSelector } from "react-redux";
 
 import { selectUserInfo, selectUser } from "../../features/userSlice";
-import firebase from "firebase";
+// import firebase from "firebase";
 
 function CartItems() {
   const [cartList, setCartList] = useState([]);
@@ -49,7 +49,7 @@ function CartItems() {
     db.collection("orders").add({
       list: cartList,
       customer: userInfo,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: db.FieldValue.serverTimestamp(),
       totalPrice,
       totalQuantity,
       status: "Processing",

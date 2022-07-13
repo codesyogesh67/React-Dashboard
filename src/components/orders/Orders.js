@@ -11,7 +11,7 @@ import {
   Table,
   Checkbox,
 } from "@mui/material";
-import firebase from "firebase";
+
 import { Link } from "react-router-dom";
 import { selectUserInfo } from "../../features/userSlice";
 import { useSelector } from "react-redux";
@@ -36,7 +36,7 @@ function Orders() {
         .doc(id)
         .update({
           status: "Approved",
-          approvedTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          approvedTimestamp: db.FieldValue.serverTimestamp(),
           approveBy: user.role === "Manager" ? "Manager" : user?.email,
         });
     } else {
@@ -82,14 +82,14 @@ function Orders() {
         {selected?.length < 1 ? (
           <p className="orders__title">Orders</p>
         ) : (
-          <div className="orders__selected">
-            <p>
-              {selected?.length} {selected?.length === 1 ? "item" : "items"}{" "}
+            <div className="orders__selected">
+              <p>
+                {selected?.length} {selected?.length === 1 ? "item" : "items"}{" "}
               selected
             </p>
-            <DeleteIcon className="orders__orderDelete" onClick={deleteOrder} />
-          </div>
-        )}
+              <DeleteIcon className="orders__orderDelete" onClick={deleteOrder} />
+            </div>
+          )}
 
         <TableContainer className={classes.container}>
           <Table stickyHeader size="small" aria-label="a dense table">

@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@firebase/app": "^0.7.28",
     "@firebase/firestore": "^1.18.0",
     "@mui/core": "^5.0.0-alpha.48",
     "@mui/icons-material": "^5.0.1",
@@ -14,8 +15,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "dotenv": "^16.0.1",
     "file-saver": "^2.0.2",
-    "firebase": "^7.24.0",
+    "firebase": "^9.9.0",
     "formik": "^2.2.9",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

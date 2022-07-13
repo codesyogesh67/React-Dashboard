@@ -1,14 +1,28 @@
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import "firebase/compat/storage";
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyAGXDgP1CSN6EcYFcNXshs74beVaERzovE",
-  authDomain: "managerapp-99a0d.firebaseapp.com",
-  databaseURL: "https://managerapp-99a0d.firebaseio.com",
-  projectId: "managerapp-99a0d",
-  storageBucket: "managerapp-99a0d.appspot.com",
-  messagingSenderId: "130486693613",
-  appId: "1:130486693613:web:9c02951664af054eb926e4",
-  measurementId: "G-TGHNS5XJ44",
+
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASEURL,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID,
+
+  // apiKey: process.env.REACT_APP_API_KEY,
+  // authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  // databaseURL: process.env.REACT_APP_DATABASEURL,
+  // projectId: process.env.REACT_APP_PROJECTID,
+  // storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  // messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  // appId: process.env.REACT_APP_APPID,
+  // measurementId: process.env.REACT_APP_MEASUREMENTID,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

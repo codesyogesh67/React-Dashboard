@@ -7,7 +7,6 @@ export const orderSlice = createSlice({
   },
   reducers: {
     updateOrders: (state, action) => {
-      console.log(action.payload);
       state.orders = action.payload;
     },
     emptyOrderList: (state, action) => {

@@ -59,8 +59,10 @@ function Header() {
               alt={user?.first_name?.toUpperCase()}
               src="#"
             />
-            <p>{user?.first_name + " " + user?.last_name}</p>
-            <p>{user?.email}</p>
+            <p className="boxModal__name">
+              {user?.first_name + " " + user?.last_name}
+            </p>
+            <p className="boxModal__email">{user?.email}</p>
             <Link
               className="boxModal__profileEdit"
               onClick={() => dispatch(updateModalStatus())}

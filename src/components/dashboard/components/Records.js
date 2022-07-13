@@ -18,7 +18,7 @@ function Records() {
     const total = [];
     const customers = [];
 
-    if (ordersList.length > 0) {
+    if (ordersList?.length > 0) {
       ordersList.map((order) => total.push(order.data.totalPrice));
     }
     setTotalIncome(total.reduce((a, b) => a + b, 0));
