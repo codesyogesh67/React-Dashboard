@@ -42,38 +42,54 @@ function Records() {
     <div className="dashboard__records">
       {user?.role === "Manager" && (
         <>
-          <div className="dashboard__record dashboard__totalSales">
-            <GroupIcon className="dashboard__icon" />
-            <div className="dashboard__value">
-              {totalCustomers}
+          <div className="dashboard__record">
+            <div className="dashboard__recordLabel">
+              <GroupIcon className="dashboard__icon" />
               <p>Total Customers</p>
             </div>
+
+
+            <p className="dashboard__value">{totalCustomers}
+            </p>
+
+
           </div>
           <div className="dashboard__record dashboard__dailyValue">
             {" "}
-            <ShoppingCartOutlinedIcon className="dashboard__icon" />
-            <div className="dashboard__value">
-              {pendingOrders?.length}
-              <p>Total Pending Orders</p>
+            <div className="dashboard__recordLabel">
+              <ShoppingCartOutlinedIcon className="dashboard__icon" />
+              <p >
+
+                Total Pending </p>
             </div>
+            <p className="dashboard__value">{pendingOrders?.length}</p>
+
           </div>
+
         </>
-      )}
+      )
+      }
 
       <div className="dashboard__record dashboard__totalOrders">
         {" "}
-        <ListAltIcon className="dashboard__icon" />
-        <div className="dashboard__value">
-          {ordersList?.length} <p>Total Orders</p>
+        <div className="dashboard__recordLabel">
+          <ListAltIcon className="dashboard__icon" />
+          <p>Total Orders</p>
         </div>
+        <p className="dashboard__value">
+          {ordersList?.length}
+        </p>
       </div>
       <div className="dashboard__record dashboard__totalIncome">
         {" "}
-        <MonetizationOnOutlinedIcon className="dashboard__icon" />
-        <div className="dashboard__value">
-          {totalIncome}{" "}
-          <p>{user?.role === "Manager" ? "Total Income" : "Total Expenses"}</p>
+        <div className="dashboard__recordLabel">
+          <MonetizationOnOutlinedIcon className="dashboard__icon" />
+          <p >{user?.role === "Manager" ? "Total Income" : "Total Expenses"}</p>
+
         </div>
+        <p className="dashboard__value">{totalIncome}</p>
+
+
       </div>
     </div>
   );

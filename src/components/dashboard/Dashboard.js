@@ -16,12 +16,12 @@ function Dashboard() {
       <div className="dashboard__container">
         <div className="dashboard__wrapper">
           <div className="dashboard__title">Dashboard</div>
-          <div className="dashboard__upperSection">
-            <Records />
-            {/* <div className="dashboard__graph">
+
+          <Records />
+          {/* <div className="dashboard__graph">
             <Charts />
           </div> */}
-          </div>{" "}
+
           <div className="dashboard__lowerSection">
             {user?.role === "Manager" && (
               <div className="dashboard__customerData">

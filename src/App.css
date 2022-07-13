@@ -24,6 +24,7 @@ div {
   flex-direction: column;
 
   overflow: hidden;
+  background:rgb(240,240,250);
 }
 
 .app__main {

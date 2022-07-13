@@ -12,21 +12,27 @@
 }
 
 .sidebar__cancel {
-  float: right;
-  padding: 5px 8px;
+position:absolute;
+  padding: 0 5px;
+  top:-15px;right:0;
 
   font-size: 1rem;
-  color: rgb(191, 191, 191);
+  color: rgb(255, 255, 255);
   cursor: pointer;
   border-radius: 3px;
-  border: 1px solid rgba(223, 222, 222, 0.5);
+  background:rgb(255,131,6);
+  border: 1px solid rgb(255,131,6);
+}
+
+.sidebar__cancel:hover{
+  background:rgb(39, 39, 39);
+  color:rgb(255, 255, 255);
+  border:1px solid white;
 }
 
 .sidebar__wrapper {
-  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 
@@ -37,10 +43,12 @@
 
 .sidebar__header {
   display: flex;
+  justify-content:center;
   align-items: center;
   font-size: 1.3rem;
-
-  margin-bottom: 40px;
+  height:80px;
+  background:rgb(235,235,235);
+ 
 }
 
 .sidebar__header > .MuiAvatar-root {
@@ -49,10 +57,23 @@
   font-size: 1rem !important;
 }
 .sidebar__title {
+  display:flex;
   padding: 10px;
 }
+
+
+.sidebar__title p:nth-child(1){
+  margin-right:8px;
+
+  color:rgb(255,131,6);
+}
+
+.sidebar__title p:nth-child(2){
+  font-weight:800;
+}
+
 .sidebar__header > .MuiAvatar-colorDefault {
-  background-color: rgb(24, 119, 242) !important;
+  background-color: rgb(255,131,6) !important;
 }
 
 /* Links */
@@ -64,23 +85,29 @@
 
 .sidebar__eachLink {
   display: flex;
+  padding:0.2rem;
+  padding-left:1.5rem;
 
-  padding-left: 50px;
   align-items: center;
   font-size: 1.2rem;
 
   cursor: pointer;
 }
 
+.sidebar__eachLink:hover{
+  color:rgb(255,131,6);
+}
+
 .sidebar__eachLink:focus {
-  background-color: rgb(42, 128, 242);
+  color:rgb(255,131,6);
 
   border-radius: 10px;
   color: white;
 }
 
 .sidebar__icon {
-  margin-right: 5px;
+  margin-right: 20px;
+
 }
 
 @media only screen and (max-width: 600px) {

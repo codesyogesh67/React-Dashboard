@@ -13,15 +13,18 @@ function Sidebar() {
 
   return (
     <div className={sidebar ? "sidebar" : "sidebar sidebar__hide"}>
-      <p className="sidebar__cancel" onClick={() => dispatch(showSideBar())}>
-        x
-      </p>
+
       <div className="sidebar__wrapper">
         <div className="sidebar__header">
           <Avatar src="1.jpg" alt="OM">
             OM
           </Avatar>
-          <p className="sidebar__title"> Order MGMT</p>
+          <div className="sidebar__title"> <p>Order
+            </p> <p>MGMT
+              </p></div>
+          <p className="sidebar__cancel" onClick={() => dispatch(showSideBar())}>
+            x
+      </p>
         </div>
         <Links />
       </div>

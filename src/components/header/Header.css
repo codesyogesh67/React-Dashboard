@@ -1,12 +1,16 @@
 .header {
+  width:100%;
   display: flex;
   justify-content: center;
+  height:85px;
+  box-shadow: 5px 5px 5px rgb(232, 232, 232);
+  background:white;
 }
 .header__container {
   padding: 10px 20px;
   position: sticky;
   z-index: 100;
-  background: white;
+
   width: 100vw;
   max-width: 1050px;
   display: flex;
