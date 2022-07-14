@@ -11,6 +11,7 @@ import db from "../../../firebase";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updatePrevUsersList } from "../../../features/userSlice";
+import AvatarColors from "./AvatarColors"
 
 function Customers() {
   const [customer, setCustomer] = useState([]);
@@ -41,7 +42,10 @@ function Customers() {
 
   return (
     <div className="dashboard__customers">
-      <p className="dashboard__customersTitle">Top Customers</p>
+      <div className="dashboard__customersHeader">
+        <p className="dashboard__customersTitle">Top Customers</p>
+        <button>View All</button>
+      </div>
       <div className="dashboard__customerList">
         <List>
           {customer.map((each) => {
@@ -51,53 +55,60 @@ function Customers() {
             } = each;
 
             return (
-              <ListItem key={id} alignItems="flex-start">
-                <ListItemAvatar>
-                  <Link
-                    to={{
-                      pathname: `/users/${first_name}-${last_name}/edit`,
-                      state: {
-                        first_name,
-                        last_name,
-                        email,
-                        username,
-                        role,
-                        id,
-                      },
-                    }}
-                  >
-                    <Avatar
+              <Link
+                key={id}
+                to={{
+                  pathname: `/users/${first_name}-${last_name}/edit`,
+                  state: {
+                    first_name,
+                    last_name,
+                    email,
+                    username,
+                    role,
+                    id,
+                  },
+                }}
+              >
+                <ListItem alignItems="flex-start" className="dashboard__customersList">
+
+                  <ListItemAvatar>
+
+                    {/* <Avatar
                       alt={first_name.toUpperCase()}
                       src="/static/images/avatar/1.jpg"
-                    />
-                  </Link>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    first_name.charAt(0).toUpperCase() +
-                    first_name.slice(1) +
-                    " " +
-                    last_name.charAt(0).toUpperCase() +
-                    last_name.slice(1)
-                  }
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      ></Typography>
-                      {email}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
+                    /> */}
+                    <AvatarColors name={first_name?.toUpperCase()} />
+
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      first_name.charAt(0).toUpperCase() +
+                      first_name.slice(1) +
+                      " " +
+                      last_name.charAt(0).toUpperCase() +
+                      last_name.slice(1)
+                    }
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        ></Typography>
+                        {email}
+                      </React.Fragment>
+                    }
+                  />
+
+                </ListItem>
+              </Link>
+
             );
           })}
         </List>
       </div>
-    </div>
+    </div >
   );
 }
 

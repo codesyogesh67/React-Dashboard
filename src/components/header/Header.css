@@ -25,10 +25,11 @@
 
 .header__draghandleIcon {
   font-size: 30px !important;
+  color:rgb(255,131,6);
 }
 
 .header__avatar {
-  background: rgb(4, 117, 255) !important;
+  background: rgb(255,131,6)!important;
 }
 
 /* @media screen and (max-width: 600px) {

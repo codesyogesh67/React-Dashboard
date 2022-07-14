@@ -15,7 +15,8 @@ function Dashboard() {
     <div className="dashboard">
       <div className="dashboard__container">
         <div className="dashboard__wrapper">
-          <div className="dashboard__title">Dashboard</div>
+          <div className="dashboard__title">Welcome, <span>
+            {user?.first_name}  </span></div>
 
           <Records />
           {/* <div className="dashboard__graph">

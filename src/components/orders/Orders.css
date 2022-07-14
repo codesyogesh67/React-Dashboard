@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   color: white;
-  background: rgba(91, 102, 136, 0.8);
+  background: rgba(251, 251, 252, 0.8);
   align-items: center;
   padding: 20px;
   margin-bottom: 10px;
@@ -34,6 +34,7 @@
 
 .orderDetail__container {
   /* display: flex; */
+
   width: 100vw;
   max-width: 1050px;
   padding: 20px;

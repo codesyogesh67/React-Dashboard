@@ -45,6 +45,7 @@ function Header() {
             alt={user?.first_name?.toUpperCase()}
             src="#"
           />
+
         </IconButton>
         <Modal
           open={modalStatus}

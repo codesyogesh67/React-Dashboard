@@ -15,11 +15,21 @@ import { selectUserInfo } from "../../../features/userSlice";
 import { Link } from "react-router-dom";
 import { selectOrdersList, updateOrders } from "../../../features/orderSlice";
 import db from "../../../firebase";
+import AvatarColors from "./AvatarColors"
 
 const useStyles = makeStyles({
   container: {
     maxHeight: 440,
+    padding: 10,
   },
+  tablerow: {
+    '&:hover': {
+      background: "rgb(235, 235, 235)",
+    }
+  },
+  tableHead: {
+    background: "rgb(235, 235, 235)",
+  }
 });
 
 function Orders() {
@@ -78,7 +88,8 @@ function Orders() {
 
   return (
     <div className="dashboard__orders">
-      <p>Latest Transactions</p>
+
+      <p className="dashboard__ordersHeader">Latest Transactions</p>
       <TableContainer className={classes.container}>
         <Table stickyHeader size="small" aria-label="a dense table">
           <TableHead>
@@ -111,57 +122,55 @@ function Orders() {
                 },
                 index
               ) => (
-                <TableRow key={id}>
-                  <TableCell align="center">
-                    {" "}
-                    <Link
-                      className="dashboard__ordersCustomer"
-                      to={{
-                        pathname: `/order/${id}`,
-                        state: {
-                          list,
-                          status,
-                          totalPrice,
-                          totalQuantity,
-                          timestamp,
-                          id,
-                          approveBy,
-                          approvedTimestamp,
-                        },
-                      }}
-                    >
-                      {user?.role === "Manager" ? (
-                        <>
-                          <Avatar
-                            alt={customer.first_name.toUpperCase()}
-                            src="#"
-                          />
-                          <span className="dashboard__ordersName">
-                            {customer.first_name} {customer.last_name}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="dashboard__ordersName">{id}</span>
-                      )}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    {new Date(timestamp?.toDate()).toLocaleDateString()}
-                  </TableCell>
+                  <TableRow key={id} className={classes.tablerow}>
+                    <TableCell align="center">
+                      {" "}
+                      <Link
+                        className="dashboard__ordersCustomer"
+                        to={{
+                          pathname: `/order/${id}`,
+                          state: {
+                            list,
+                            status,
+                            totalPrice,
+                            totalQuantity,
+                            timestamp,
+                            id,
+                            approveBy,
+                            approvedTimestamp,
+                          },
+                        }}
+                      >
+                        {user?.role === "Manager" ? (
+                          <>
 
-                  <TableCell align="center">${totalPrice}</TableCell>
-                  <TableCell
-                    align="center"
-                    className={
-                      status === "Processing"
-                        ? "orders__processing"
-                        : "orders__processed"
-                    }
-                  >
-                    <span> {status}</span>
-                  </TableCell>
-                </TableRow>
-              )
+                            <AvatarColors name={customer.first_name.toUpperCase()} />
+                            <span className="dashboard__ordersName">
+                              {customer.first_name} {customer.last_name}
+                            </span>
+                          </>
+                        ) : (
+                            <span className="dashboard__ordersName">{id}</span>
+                          )}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      {new Date(timestamp?.toDate()).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell align="center">${totalPrice}</TableCell>
+                    <TableCell
+                      align="center"
+                      className={
+                        status === "Processing"
+                          ? "orders__processing"
+                          : "orders__processed"
+                      }
+                    >
+                      <span> {status}</span>
+                    </TableCell>
+                  </TableRow>
+                )
             )}
           </TableBody>
         </Table>
