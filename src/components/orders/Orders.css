@@ -1,6 +1,7 @@
 .orders {
   display: flex;
   justify-content: center;
+ 
 }
 
 .orders__container {
@@ -19,7 +20,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: white;
+  /* color: white; */
   background: rgba(251, 251, 252, 0.8);
   align-items: center;
   padding: 20px;

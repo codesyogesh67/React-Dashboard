@@ -12,7 +12,7 @@ import {
   TableBody,
 } from "@mui/material";
 import "./CartItems.css";
-import db from "../../firebase";
+import db, { doc } from "../../firebase";
 import { useSelector } from "react-redux";
 
 import { selectUserInfo, selectUser } from "../../features/userSlice";
@@ -28,6 +28,7 @@ function CartItems() {
 
   useEffect(() => {
     if (userInfo) {
+      const q = doc(db, "users")
       db.collection("users")
         .doc(userInfo?.id)
         .collection("cartItems")

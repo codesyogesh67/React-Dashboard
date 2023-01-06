@@ -14,7 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "../../../features/userSlice";
 import { Link } from "react-router-dom";
 import { selectOrdersList, updateOrders } from "../../../features/orderSlice";
-import db from "../../../firebase";
+import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
+  from "../../../firebase";
 import AvatarColors from "./AvatarColors"
 
 const useStyles = makeStyles({
@@ -40,49 +41,55 @@ function Orders() {
   const dispatch = useDispatch();
   const [ordersList, setOrdersList] = useState([]);
 
-  useEffect(() => {
-    if (user?.role === "Manager") {
-      const ref = db.collection("orders");
 
-      ref.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-        dispatch(
-          updateOrders(
-            snapshot.docs.map((doc) => ({
+  useEffect(() => {
+    if (user) {
+      async function get_orders() {
+        if (user?.role === "Manager") {
+          const ref = collection(db, "orders")
+          const filteredDocs = await getDocs(ref)
+
+
+          // ref.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+          dispatch(
+            updateOrders(
+              filteredDocs.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+            )
+          );
+          setOrdersList(
+            filteredDocs.docs.map((doc) => ({
               id: doc.id,
               data: doc.data(),
             }))
-          )
-        );
-        setOrdersList(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
-    } else {
-      db.collection("orders")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => {
-          const orderList = snapshot.docs.filter((doc) => {
-            if (doc.data().customer?.email === user?.email) {
-              dispatch(
-                updateOrders(
-                  orderList?.map((order) => ({
-                    id: order.id,
-                    data: order.data(),
-                  }))
-                )
-              );
-              setOrdersList(
+          );
+        }
+        else {
+
+          const q = query(collection(db, "orders"), where("customer", "email", "==", "user?.email"))
+          const orderList = getDocs(q)
+          if (orderList) {
+            dispatch(
+              updateOrders(
                 orderList?.map((order) => ({
                   id: order.id,
                   data: order.data(),
                 }))
-              );
-            }
-          });
-        });
+              )
+            );
+            setOrdersList(
+              orderList?.map((order) => ({
+                id: order.id,
+                data: order.data(),
+              }))
+            );
+          }
+        }
+
+      }
+      get_orders()
     }
   }, [user]);
 

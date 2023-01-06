@@ -1,5 +1,5 @@
 .users {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background-color);
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -8,12 +8,12 @@
 .users__container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
   width: 100%;
   max-width: 1050px;
+  background:white;
 }
 .users__button {
-  padding: 0.3rem;
+  /* padding: 0.3rem; */
   border-radius: 0.3rem;
   outline-width: 0;
   border: 1.5px solid rgb(223, 222, 222);
@@ -37,17 +37,34 @@
 
 /* Users Header */
 .usersHeader {
+
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 10px;
-  padding-bottom: 10px;
-  padding-right: 30px;
-  border-bottom: 1px solid rgb(201, 201, 201);
+  flex-direction:column;
+
+}
+.usersHeader__title{
+    font-size:var(--container-title-size);
+   padding:1.2rem 0 1.2rem 2rem;
+  border-bottom:var(--border-bottom);
+  
+
+
 }
 
+.usersHeader__search{
+
+  align-self:end;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0.8rem;
+
+
+}
 .usersHeader__button {
   display: flex;
+  align-items:center;
+  
 }
 
 .usersHeader__links,
@@ -59,10 +76,9 @@
 
 .usersHeader__searchForm {
   display: flex;
-  width: 70vw;
-  border: 1px solid rgb(183, 183, 184);
-  border-radius: 8px;
-  margin-right: 8px;
+  align-items:center;
+  margin-right: 12px;
+  border:none;
 }
 
 .usersHeader__searchForm > input {
@@ -71,8 +87,17 @@
   border-radius: 6px;
   border: none;
   padding-left: 20px;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   outline: none;
+  border-radius:20px;
+  color:rgb(0, 0, 0);
+  border:1px solid rgb(226, 226, 226);
+
+}
+
+.usersHeader__searchForm > input:focus{
+  border:1px solid rgb(154, 193, 240);
+  box-shadow:2px 2px 2px 2px rgb(154, 193, 240);
 }
 
 .usersHeader__searchForm > button {
@@ -85,9 +110,11 @@
 }
 
 .usersHeader__addButton,
-.users__searchButton {
-  cursor: pointer;
+.usersHeader__searchButton {
+
   margin-right: 15px;
+  cursor: pointer;
+ 
 }
 
 .usersList__list {
@@ -149,6 +176,7 @@ a {
 .newUserForm {
   display: flex;
   justify-content: center;
+  height:80vh;
 }
 
 .newUserForm__container {
@@ -157,6 +185,7 @@ a {
   display: flex;
   flex-direction: column;
   background: white;
+  
 }
 
 .newUserForm__header {
@@ -195,8 +224,9 @@ a:focus {
   display: flex;
   flex-direction: column;
   padding: 3rem;
+  padding-bottom:0;
   align-items: center;
-  padding-bottom: 0;
+ 
 }
 
 .newUserForm__form > input {
@@ -211,7 +241,7 @@ a:focus {
 
 .newUserForm__form > button {
   width: 130px;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   padding: 0.3rem;
   border-radius: 0.3rem;
   border: 1px solid rgb(172, 171, 171);
@@ -304,4 +334,14 @@ a:focus {
   padding: 10px;
   color: blue;
   cursor: pointer;
+}
+
+
+/* Users list */
+
+
+
+.usersList__tableContainer>table>tbody >tr:hover{
+  background:rgb(228, 228, 228) !important;
+  
 }

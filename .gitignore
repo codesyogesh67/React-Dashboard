@@ -19,6 +19,9 @@
 .env.production.local
 src/firebase.js
 .firebaserc
+.env
+.firebase
+
 
 
 

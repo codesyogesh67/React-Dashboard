@@ -4,7 +4,8 @@ import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 
 import { Formik } from "formik";
-import db, { auth } from "../../firebase";
+import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
+  from "../../firebase";
 
 import Message from "../header/Message";
 
@@ -33,14 +34,25 @@ function SignUp() {
                 .then((authUser) => {
                   console.log(authUser);
                   setTimeout(() => {
-                    db.collection("users").add({
+                    const q = collection(db, "users")
+
+                    const values = {
                       first_name: values.first_name,
                       last_name: values.last_name,
                       username: values.username,
                       role: "Customer",
                       email: authUser.user.email,
                       id: authUser.user.uid,
-                    });
+                    }
+                    const querySnapshot = addDoc(q, values)
+                    // db.collection("users").add({
+                    //   first_name: values.first_name,
+                    //   last_name: values.last_name,
+                    //   username: values.username,
+                    //   role: "Customer",
+                    //   email: authUser.user.email,
+                    //   id: authUser.user.uid,
+                    // });
                   }, 2000);
                   setSubmitting(false);
                 })

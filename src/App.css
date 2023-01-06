@@ -1,6 +1,19 @@
 * {
   box-sizing: border-box;
 }
+form,h2{
+  padding:0;
+  margin:0;
+}
+
+:root{
+  --background-color:rgb(240,240,250);
+  --color:rgb(255,131,6);
+  --container-title-size: 1.5rem;
+  --page-title:1.7rem;
+  --border-bottom:2px solid rgb(235, 235, 235);
+  ;
+}
 
 div {
   margin: 0;

@@ -11,6 +11,8 @@ import {
   selectdeleteCustomerModal,
   updateDeleteCustomerModal,
 } from "../../features/extraSlice";
+import { getDoc, where, onAuthStateChanged, collection, getAuth, getDocs, query, doc } from "../../firebase";
+
 
 function UserForm(props) {
   const {
@@ -36,16 +38,25 @@ function UserForm(props) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    db.collection("orders")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        const orders = snapshot.docs.filter(
-          (doc) => doc.data().customer.email === email
-        );
-        setUserOrders(
-          orders.map((order) => ({ id: order.id, data: order.data() }))
-        );
-      });
+    async function get_user_form() {
+      const q = query(collection(db, "orders"), where("email", "==", email))
+      const filtereddoc = await getDocs(q)
+      setUserOrders(filtereddoc.docs.map(doc =>
+        ({ id: doc.id, data: doc.data() })
+      ))
+      // collection(db, "orders")
+      //   .orderBy("timestamp", "desc")
+      //   .onSnapshot((snapshot) => {
+      //     const orders = snapshot.docs.filter(
+      //       (doc) => doc.data().customer.email === email
+      //     );
+      //     setUserOrders(
+      //       orders.map((order) => )
+      //     );
+      //   });
+    }
+    get_user_form()
+
   }, []);
 
   const handleSubmit = (e) => {
@@ -104,8 +115,8 @@ function UserForm(props) {
                 defaultValue="Customer"
               />
             ) : (
-              <p>{userRole}</p>
-            )}
+                <p>{userRole}</p>
+              )}
           </div>
 
           <div className="userForm__buttons">

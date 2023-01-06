@@ -1,13 +1,15 @@
 .boxModal {
   padding: 30px;
+  padding-left:45px;
+  padding-bottom:10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   height: 250px;
   background: white;
   float: right;
-  margin-top: 55px;
+  margin-top: 75px;
   border: 1px solid rgba(172, 167, 167, 0.5);
   margin-right: 15px;
   box-shadow: 3px 3px 3px rgb(182, 180, 180);
@@ -15,12 +17,13 @@
 }
 
 .boxModal__avatar {
-  height: 4rem !important;
-  width: 4rem !important;
+  height: 3rem !important;
+  width: 3rem !important;
   color: rgb(255, 255, 255) !important;
-  font-size: 2rem !important;
+  font-size: 1.5rem !important;
   margin-bottom: 30px;
-  background: rgb(27, 88, 240) !important;
+  background: #3ea4fb !important;
+  margin-top:10px;
 }
 
 .boxModal > p {
@@ -31,21 +34,36 @@
 .boxModal > p:nth-child(2) {
   text-transform: capitalize;
   margin-bottom: 5px;
-  color: blue;
+
   font-weight: 600;
 }
-.boxModal > p:nth-child(3) {
-  margin-bottom: 20px;
+.boxModal__name{
+  font-size:1rem;
+  /* color:white; */
 }
+
+.boxModal__email{
+  font-size:0.7rem;
+  font-weight:600;
+  padding:0.4rem;
+  border-radius:10px;
+  color:#3ea4fb;
+
+}
+
 
 .boxModal__profileEdit {
-  padding: 5px;
+  padding: 0.3rem 0.6rem;
   cursor: pointer;
-  color: red;
+  color: white;
+  background: #3ea4fb;;
+  border-radius:10px;
+  cursor:pointer;
+  margin-top:30px;
 }
 
-.boxModal__profileEdit:hover {
+/* .boxModal__profileEdit:hover {
   background: black;
   border-radius: 10px;
   color: white;
-}
+} */

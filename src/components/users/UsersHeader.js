@@ -20,16 +20,17 @@ function UsersHeader() {
   const [input, setInput] = useState("");
   const list = useSelector(selectPrevUsersList);
   const searchIcon = useSelector(selectSearchIcon);
-
+  console.log("list", list)
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (input !== "") {
-      const filteredList = list.filter(
-        (list) =>
-          list.first_name.includes(input) ||
-          list.last_name.includes(input) ||
-          list.email.includes(input)
+
+      const filteredList = list?.filter(
+        ({ data: { first_name, last_name, email } }) =>
+          first_name.includes(input) ||
+          last_name.includes(input) ||
+          email.includes(input)
       );
       dispatch(updateFilterdList(filteredList));
       dispatch(updateFilterStatus(true));
@@ -38,36 +39,39 @@ function UsersHeader() {
 
   return (
     <div className="usersHeader">
-      {searchIcon ? (
-        <form className="usersHeader__searchForm" onSubmit={handleSubmit}>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Search"
-          />
-        </form>
-      ) : (
-        <h2 className="usersHeader__title">Users</h2>
-      )}
-      <div className="usersHeader__button">
-        <Link to="/users/add-new-user">
-          <PersonAddAltIcon className="usersHeader__addButton" />
-        </Link>
-        {searchIcon ? (
-          <GroupIcon
-            className="usersHeader__searchButton"
-            onClick={() => {
-              dispatch(updateSearch());
-              dispatch(updateFilterStatus(false));
-              dispatch(updateFilterdList([]));
-            }}
-          />
-        ) : (
-          <PersonSearchIcon
-            onClick={() => dispatch(updateSearch())}
-            className="usersHeader__searchButton"
-          />
+      <h2 className="usersHeader__title">Users List</h2>
+      <div className="usersHeader__search">
+
+
+        {searchIcon && (
+          <form className="usersHeader__searchForm" onSubmit={handleSubmit}>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Search"
+            />
+          </form>
         )}
+        <div className="usersHeader__button">
+          <Link to="/users/add-new-user">
+            <PersonAddAltIcon className="usersHeader__addButton" />
+          </Link>
+          {searchIcon ? (
+            <GroupIcon
+              className="usersHeader__searchButton"
+              onClick={() => {
+                dispatch(updateSearch());
+                dispatch(updateFilterStatus(false));
+                dispatch(updateFilterdList([]));
+              }}
+            />
+          ) : (
+              <PersonSearchIcon
+                onClick={() => dispatch(updateSearch())}
+                className="usersHeader__searchButton"
+              />
+            )}
+        </div>
       </div>
     </div>
   );

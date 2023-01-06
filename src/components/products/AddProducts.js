@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import db from "../../firebase";
+import db, { addDoc, collection } from "../../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import "./Products.css";
@@ -14,12 +14,13 @@ function AddProducts() {
     e.preventDefault();
 
     if (user) {
-      db.collection("products").add({
+      addDoc(collection(db, "products"), {
         name: product.toLowerCase(),
         quantity: quantity,
         price: price,
         addedBy: user.userInfo?.first_name + " " + user.userInfo?.last_name,
-      });
+      })
+
     }
     setProduct("");
     setQuantity("");

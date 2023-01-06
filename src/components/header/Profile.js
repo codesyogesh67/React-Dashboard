@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import db from "../../firebase";
 import { useHistory } from "react-router-dom";
 import { selectUserInfo } from "../../features/userSlice";
+import { updateDoc, doc } from "../../firebase";
 
 function Profile() {
   const user = useSelector(selectUserInfo);
@@ -17,14 +18,26 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    db.collection("users").doc(user.id).update({
-      first_name: firstName,
-      last_name: lastName,
-      role: userRole,
-      email: emailId,
-      username: userName,
-      id: user.id,
-    });
+    const q = doc(db, "users", "user.id")
+    const docRef = async () => {
+      const data = await updateDoc(q, {
+        first_name: firstName,
+        last_name: lastName,
+        role: userRole,
+        email: emailId,
+        username: userName,
+        id: user.id,
+      })
+    }
+    // db.collection("users").doc(user.id).update({
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   role: userRole,
+    //   email: emailId,
+    //   username: userName,
+    //   id: user.id,
+    // });
+    docRef()
     history.push("/");
   };
 

@@ -7,6 +7,9 @@ import { selectUserInfo } from "../../../features/userSlice";
 import { useSelector } from "react-redux";
 import GroupIcon from "@mui/icons-material/Group";
 import { selectOrdersList } from "../../../features/orderSlice";
+import { addDoc } from "firebase/firestore";
+import { getDocs, query, collection, where } from "../../../firebase";
+
 
 function Records() {
   const user = useSelector(selectUserInfo);
@@ -14,25 +17,34 @@ function Records() {
   const [totalCustomers, setTotalCustomers] = useState(0);
   const ordersList = useSelector(selectOrdersList);
 
-  useEffect(() => {
+  useEffect(async () => {
     const total = [];
     const customers = [];
+
 
     if (ordersList?.length > 0) {
       ordersList.map((order) => total.push(order.data.totalPrice));
     }
     setTotalIncome(total.reduce((a, b) => a + b, 0));
 
-    db.collection("users").onSnapshot((snapshot) => {
-      snapshot.docs.filter((doc) => {
-        if (doc.data().role === "Customer") {
-          customers.push(doc);
-        }
-      });
+    const q = query(collection(db, "users"), where("role", "==", "Customer"))
 
-      setTotalCustomers(customers.length);
-    });
-  }, [ordersList]);
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot) {
+      customers.push(querySnapshot)
+    }
+
+    // db.collection("users").onSnapshot((snapshot) => {
+
+    //   snapshot.docs.filter((doc) => {
+    //     if (doc.data().role === "Customer") {
+    //       customers.push(doc);
+    //     }
+    //   });
+
+    setTotalCustomers(customers.length);
+  },
+    [ordersList]);
 
   const pendingOrders = ordersList?.filter(
     (order) => order.data.status === "Processing"

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import db from "../../firebase";
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 import "./Products.css";
 import {
@@ -15,6 +14,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddShoppingCartTwoToneIcon from "@mui/icons-material/AddShoppingCartTwoTone";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../../features/userSlice";
+import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc } from "../../firebase";
+
 
 function ProductsList() {
   const userInfo = useSelector(selectUserInfo);
@@ -24,14 +25,23 @@ function ProductsList() {
   const [editIdx, setEditIdx] = useState(-1);
 
   useEffect(() => {
-    const unsubscribe = db.collection("products").onSnapshot((snapshot) => {
-      setProductList(
-        snapshot.docs?.map((doc) => ({
-          productId: doc.id,
-          data: doc.data(),
-        }))
-      );
-    });
+    const unsubscribe =
+      async function get_products() {
+        const ref = collection(db, "products")
+        const products = await getDocs(ref)
+        setProductList(
+          products.docs.map(doc => ({
+            productId: doc.id,
+            data: doc.data(),
+          }))
+        )
+        get_products()
+
+      }
+
+
+
+
     return () => unsubscribe;
   }, []);
 
@@ -147,16 +157,16 @@ function ProductsList() {
                         </TableCell>
                       </>
                     ) : (
-                      <>
-                        <TableCell className="productsList__name" align="left">
-                          {name}
-                        </TableCell>
-                        <TableCell align="center"> $ {price}</TableCell>
-                        {userInfo?.role === "Manager" && (
-                          <TableCell align="center">{quantity}</TableCell>
-                        )}
-                      </>
-                    )}
+                        <>
+                          <TableCell className="productsList__name" align="left">
+                            {name}
+                          </TableCell>
+                          <TableCell align="center"> $ {price}</TableCell>
+                          {userInfo?.role === "Manager" && (
+                            <TableCell align="center">{quantity}</TableCell>
+                          )}
+                        </>
+                      )}
 
                     {userInfo?.role === "Customer" && (
                       <TableCell align="center">
@@ -178,11 +188,11 @@ function ProductsList() {
                               Submit
                             </button>
                           ) : (
-                            <EditOutlinedIcon
-                              className="productsList__editIcon"
-                              onClick={() => startEditing(index)}
-                            />
-                          )}
+                              <EditOutlinedIcon
+                                className="productsList__editIcon"
+                                onClick={() => startEditing(index)}
+                              />
+                            )}
                         </TableCell>
                         <TableCell align="center">
                           <CloseTwoToneIcon

@@ -4,10 +4,11 @@ import {
   ListItem,
   ListItemAvatar,
   Typography,
-  ListItemText,
-  Avatar,
+  ListItemText
 } from "@mui/material";
-import db from "../../../firebase";
+
+import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
+  from "../../../firebase";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updatePrevUsersList } from "../../../features/userSlice";
@@ -19,32 +20,45 @@ function Customers() {
 
   useEffect(() => {
     let mounted = true;
-    if (mounted) {
-      db.collection("users").onSnapshot((snapshot) => {
-        const filteredDoc = snapshot.docs?.filter(
-          (doc) => doc.data().role === "Customer"
-        );
+    const findCustomers = async () => {
+      if (mounted) {
+        const q = query(collection(db, "users"), where("role", "==", "Customer"))
+        const filteredDoc = await getDocs(q)
         dispatch(
           updatePrevUsersList(
-            filteredDoc.map((doc) => ({ id: doc.id, data: doc.data() }))
-          )
+            filteredDoc.docs.map(doc => ({
+              id: doc.id,
+              data: doc.data()
+            })
+            )))
+        setCustomer(filteredDoc.docs.map(doc => ({
+          id: doc.id,
+          data: doc.data()
+        })
+        )
         );
-        setCustomer(
-          filteredDoc.map((doc) => ({ id: doc.id, data: doc.data() }))
-        );
-      });
+
+
+
+      }
     }
+    findCustomers()
 
     return () => {
       mounted = false;
     };
   }, []);
 
+
+
   return (
     <div className="dashboard__customers">
       <div className="dashboard__customersHeader">
         <p className="dashboard__customersTitle">Top Customers</p>
-        <button>View All</button>
+        <Link to="/users">
+          <button className="dashboard__customersButton" >View All</button>
+        </Link>
+
       </div>
       <div className="dashboard__customerList">
         <List>
@@ -73,10 +87,7 @@ function Customers() {
 
                   <ListItemAvatar>
 
-                    {/* <Avatar
-                      alt={first_name.toUpperCase()}
-                      src="/static/images/avatar/1.jpg"
-                    /> */}
+
                     <AvatarColors name={first_name?.toUpperCase()} />
 
                   </ListItemAvatar>

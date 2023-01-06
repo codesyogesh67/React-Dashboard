@@ -22,12 +22,14 @@ import Profile from "./components/header/Profile";
 import UserForm from "./components/users/UserForm";
 import NewUserForm from "./components/users/NewUserForm";
 
+
 import OrderDetail from "./components/orders/OrderDetail";
 import UserOrderDetail from "./components/users/UserOrderDetail";
 import Dashboard from "./components/dashboard/Dashboard";
 
 import RestrictedRoute from "./RestrictedRoute";
 import { updateOrders } from "./features/orderSlice";
+import { getDoc, where, onAuthStateChanged, collection, getAuth, getDocs, query, doc } from "./firebase";
 
 function App() {
   const user = useSelector(selectUser);
@@ -35,8 +37,10 @@ function App() {
 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
         dispatch(
           login({
@@ -44,33 +48,50 @@ function App() {
             email: authUser.email,
           })
         );
-        db.collection("users").onSnapshot((snapshot) => {
-          snapshot.docs.find((doc) => {
-            if (authUser?.email === doc.data().email) {
-              const {
+
+
+
+        const q = query(collection(db, "users"), where("email", "==", authUser.email))
+
+        const querySnapshot = await getDocs(q)
+
+
+        if (querySnapshot.docs.length > 0) {
+          querySnapshot.forEach(doc => {
+            const {
+              first_name,
+              last_name,
+              email,
+              role,
+              username,
+            } = doc.data();
+
+
+            dispatch(
+              updateUserInfo({
+                id: doc.id,
                 first_name,
                 last_name,
                 email,
                 role,
                 username,
-              } = doc.data();
-              dispatch(
-                updateUserInfo({
-                  id: doc.id,
-                  first_name,
-                  last_name,
-                  email,
-                  role,
-                  username,
-                })
-              );
-            }
-          });
-        });
-      } else {
-        dispatch(logout());
+              }))
+
+          })
+        }
+
+
+
+        else {
+          dispatch(logout())
+        }
+
+
+
+
+
       }
-    });
+    })
   }, []);
 
   return (
@@ -109,14 +130,14 @@ function App() {
           </div>
         </>
       ) : (
-        <>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <RestrictedRoute path="/:handle" />
-          </Switch>
-        </>
-      )}
+          <>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/signup" component={SignUp} />
+              <RestrictedRoute path="/:handle" />
+            </Switch>
+          </>
+        )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { Formik, Form } from "formik";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
 import Message from "../header/Message";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
   const history = useHistory();
@@ -21,8 +22,15 @@ function Login() {
           <Formik
             initialValues={{ email: "", password: "" }}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              auth
-                .signInWithEmailAndPassword(values.email, values.password)
+              console.log("submitting sign up form..")
+              const auth = getAuth();
+              signInWithEmailAndPassword(auth, values.email, values.password)
+                .then((userCredential) => {
+                  if (userCredential) {
+                    history.push("/")
+                  }
+                }
+                )
                 // .then((auth) => {})
                 .catch((error) => setMessage(true));
               setTimeout(() => {
@@ -91,6 +99,10 @@ function Login() {
           </Formik>
           <p className="login__footerText">
             Not a member? <Link to="/signup">Sign Up now</Link>
+          </p>
+
+          <p>
+            for admin use: use admin@gmail.com and password: 123456
           </p>
         </div>
       </div>

@@ -5,8 +5,6 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@firebase/app": "^0.7.28",
-    "@firebase/firestore": "^1.18.0",
     "@mui/core": "^5.0.0-alpha.48",
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.1",
@@ -17,14 +15,15 @@
     "@testing-library/user-event": "^7.2.1",
     "dotenv": "^16.0.1",
     "file-saver": "^2.0.2",
-    "firebase": "^9.9.0",
+    "firebase": "^9.15.0",
     "formik": "^2.2.9",
+    "process": "^0.11.10",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.4",
+    "react-scripts": "^5.0.1",
     "recharts": "^2.1.4",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
@@ -32,7 +31,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
