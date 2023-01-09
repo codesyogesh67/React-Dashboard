@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import StatBox from "./StatBox"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -7,104 +8,111 @@ import { selectUserInfo } from "../../../features/userSlice";
 import { useSelector } from "react-redux";
 import GroupIcon from "@mui/icons-material/Group";
 import { selectOrdersList } from "../../../features/orderSlice";
-import { addDoc } from "firebase/firestore";
 import { getDocs, query, collection, where } from "../../../firebase";
-
+import { tokens } from "../../../theme";
+import { Box, useTheme } from "@mui/material";
+import Skeleton from '@mui/material/Skeleton';
 
 function Records() {
-  const user = useSelector(selectUserInfo);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalCustomers, setTotalCustomers] = useState(0);
-  const ordersList = useSelector(selectOrdersList);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-  useEffect(async () => {
-    const total = [];
-    const customers = [];
+    const [totalIncome, setTotalIncome] = useState(0);
+    const [totalCustomers, setTotalCustomers] = useState(0);
+    const ordersList = useSelector(selectOrdersList);
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const total = [];
+        const customers = [];
+
+        async function get_records() {
+            if (ordersList?.length > 0) {
+                ordersList.map((order) => total.push(order.data.totalPrice));
+            }
+            setTotalIncome(total.reduce((a, b) => a + b, 0));
+
+            const q = query(collection(db, "users"), where("role", "==", "Customer"))
+
+            const querySnapshot = await getDocs(q);
+            if (querySnapshot) {
+                customers.push(querySnapshot)
+            }
+
+            setTotalCustomers(customers.length);
+            setLoading(false)
+        }
+        get_records()
+    },
+        [ordersList]);
+
+    const pendingOrders = ordersList?.filter(
+        (order) => order.data.status === "Processing"
+    );
 
 
-    if (ordersList?.length > 0) {
-      ordersList.map((order) => total.push(order.data.totalPrice));
-    }
-    setTotalIncome(total.reduce((a, b) => a + b, 0));
+    const data = [
+        {
+            icon: <GroupIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+            />,
+            value: totalCustomers,
+            name: "Total Customers"
+        },
 
-    const q = query(collection(db, "users"), where("role", "==", "Customer"))
 
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot) {
-      customers.push(querySnapshot)
-    }
+        {
+            icon: <ShoppingCartOutlinedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+            />,
+            value: pendingOrders?.length,
+            name: "Total Pending"
+        },
+        {
+            icon: <ListAltIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+            />,
+            value: ordersList?.length,
+            name: "Total Orders"
+        },
+        {
+            icon: <MonetizationOnOutlinedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+            />,
+            value: totalIncome,
+            name: "Total Income"
+        },
 
-    // db.collection("users").onSnapshot((snapshot) => {
 
-    //   snapshot.docs.filter((doc) => {
-    //     if (doc.data().role === "Customer") {
-    //       customers.push(doc);
-    //     }
-    //   });
+    ]
 
-    setTotalCustomers(customers.length);
-  },
-    [ordersList]);
-
-  const pendingOrders = ordersList?.filter(
-    (order) => order.data.status === "Processing"
-  );
-
-  return (
-    <div className="dashboard__records">
-      {user?.role === "Manager" && (
+    return (
         <>
-          <div className="dashboard__record">
-            <div className="dashboard__recordLabel">
-              <GroupIcon className="dashboard__icon" />
-              <p>Total Customers</p>
-            </div>
+            {!loading ?
 
-
-            <p className="dashboard__value">{totalCustomers}
-            </p>
-
-
-          </div>
-          <div className="dashboard__record dashboard__dailyValue">
-            {" "}
-            <div className="dashboard__recordLabel">
-              <ShoppingCartOutlinedIcon className="dashboard__icon" />
-              <p >
-
-                Total Pending </p>
-            </div>
-            <p className="dashboard__value">{pendingOrders?.length}</p>
-
-          </div>
-
+                (
+                    data.map(({ icon, value, name }) =>
+                        (
+                            <Box
+                                key={name}
+                                gridColumn="span 3"
+                                backgroundColor={colors.primary[400]}
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                            >
+                                <StatBox
+                                    title={value}
+                                    subtitle={name}
+                                    icon={
+                                        icon
+                                    }
+                                />
+                            </Box>
+                        )
+                    )
+                ) : <Skeleton variant="rectangular" />}
         </>
-      )
-      }
-
-      <div className="dashboard__record dashboard__totalOrders">
-        {" "}
-        <div className="dashboard__recordLabel">
-          <ListAltIcon className="dashboard__icon" />
-          <p>Total Orders</p>
-        </div>
-        <p className="dashboard__value">
-          {ordersList?.length}
-        </p>
-      </div>
-      <div className="dashboard__record dashboard__totalIncome">
-        {" "}
-        <div className="dashboard__recordLabel">
-          <MonetizationOnOutlinedIcon className="dashboard__icon" />
-          <p >{user?.role === "Manager" ? "Total Income" : "Total Expenses"}</p>
-
-        </div>
-        <p className="dashboard__value">{totalIncome}</p>
-
-
-      </div>
-    </div>
-  );
+    )
 }
-
-export default Records;
+export default Records

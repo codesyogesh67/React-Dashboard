@@ -11,12 +11,12 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CollapsibleTable(props) {
   const { orders } = props.location.state;
 
-  const history = useHistory();
+  const history = useNavigate();
 
   let orderList = [];
   orderList.push(
@@ -136,17 +136,17 @@ function UserOrderDetail(props) {
                       cartItemId,
                       data: { productId, name, price, quantity },
                     }) => (
-                      <TableRow key={cartItemId}>
-                        <TableCell component="th" scope="row" align="center">
-                          {productId}
-                        </TableCell>
-                        <TableCell align="center">{name}</TableCell>
-                        <TableCell align="center"> {quantity}</TableCell>
-                        <TableCell align="center">
-                          $ {price * quantity}
-                        </TableCell>
-                      </TableRow>
-                    )
+                        <TableRow key={cartItemId}>
+                          <TableCell component="th" scope="row" align="center">
+                            {productId}
+                          </TableCell>
+                          <TableCell align="center">{name}</TableCell>
+                          <TableCell align="center"> {quantity}</TableCell>
+                          <TableCell align="center">
+                            $ {price * quantity}
+                          </TableCell>
+                        </TableRow>
+                      )
                   )}
                 </TableBody>
               </Table>

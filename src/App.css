@@ -19,11 +19,20 @@ div {
   margin: 0;
   padding: 0;
 }
+a{
+  text-decoration:none;
+}
 
 .app {
   display: flex;
   height: 100vh;
   overflow: hidden;
+}
+
+.content{
+
+  width:100%;
+  overflow:scroll;
 }
 
 .app::-webkit-scrollbar {
@@ -79,7 +88,7 @@ div {
 
 button {
   padding: 0.5rem;
-  width: 120px;
+
   border-radius: 0.5rem;
   outline-width: 0;
   cursor: pointer;

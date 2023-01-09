@@ -9,10 +9,10 @@ import {
   Paper,
 } from "@mui/material";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function OrderDetail(props) {
-  const history = useHistory();
+  const history = useNavigate();
   const { list, totalPrice, totalQuantity } = props.location.state;
 
   const backtoOrderDetail = () => {

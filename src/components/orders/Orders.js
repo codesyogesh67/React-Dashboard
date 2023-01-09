@@ -1,41 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-    TableContainer,
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Checkbox,
-    Avatar,
-} from "@mui/material";
-import "./Orders.css";
-import { makeStyles } from "@mui/styles";
+
+import { Box, Typography, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { selectUserInfo } from "../../features/userSlice";
 import { selectOrdersList, updateOrders } from "../../features/orderSlice";
 import db, { collection, getDocs, query, where, deleteDoc, getDoc, doc, addDoc, updateDoc } from "../../firebase";
-import AvatarColors from "../dashboard/components/AvatarColors";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { selectUserInfo } from "../../features/userSlice";
 
-const useStyles = makeStyles({
-    container: {
-        maxHeight: 440,
-        padding: 10,
-    },
-    tablerow: {
-        '&:hover': {
-            background: "rgb(235, 235, 235)",
-        }
-    },
-    tableHead: {
-        background: "rgb(235, 235, 235)",
-    }
-});
+import { tokens } from "../../theme";
+import Header from "../header/Header";
 
-function Orders() {
-    const classes = useStyles();
+const Orders = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [selected, setSelected] = useState([]);
 
     const user = useSelector(selectUserInfo);
@@ -63,7 +41,9 @@ function Orders() {
                 setOrdersList(
                     filteredOrders.docs.map((doc) => ({
                         id: doc.id,
-                        data: doc.data(),
+                        date: new Date(doc.data().date?.toDate()).toLocaleDateString(),
+                        amount: doc.data().totalPrice,
+                        status: doc.data().status
                     }))
                 );
 
@@ -139,130 +119,71 @@ function Orders() {
     };
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
+    console.log(ordersList)
+
+    const columns = [
+        { field: "id", headerName: "ID" },
+        {
+            field: "date",
+            headerName: "Date",
+            flex: 1,
+            cellClassName: "date-column--cell",
+        },
+        {
+            field: "amount",
+            headerName: "Amount",
+            flex: 1,
+        },
+        {
+            field: "status",
+            headerName: "Status",
+            flex: 1,
+        },
+        {
+            field: "action",
+            headerName: "Action",
+            flex: 1,
+
+        }
+
+    ];
 
     return (
-        <div className="orders">
-            <div className="orders__container">
-
-                {selected?.length < 1 ? (
-                    <p className="orders__title">Orders</p>
-                ) : (
-                        <div className="orders__selected">
-                            <p>
-                                {selected?.length} {selected?.length === 1 ? "item" : "items"}{" "}
-              selected
-            </p>
-                            <DeleteIcon className="orders__orderDelete" onClick={deleteOrder} />
-                        </div>
-                    )}
-                <TableContainer className={classes.container}>
-                    <Table stickyHeader size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell align="center">
-                                    Order                                </TableCell>
-                                <TableCell align="center">Date </TableCell>
-                                <TableCell align="center">Amount</TableCell>
-                                <TableCell align="center">Status</TableCell>
-
-                                <TableCell align="center"></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {ordersList?.map(
-                                (
-                                    {
-                                        id,
-                                        data: {
-                                            customer,
-                                            list,
-                                            timestamp,
-                                            status,
-                                            totalPrice,
-                                            totalQuantity,
-                                            approveBy,
-                                            approvedTimestamp,
-                                        },
-                                    },
-                                    index
-                                ) => {
-
-                                    const isItemSelected = isSelected(id);
-
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                                    return (
-                                        <TableRow key={id}
-                                            hover
-                                            role="checkbox"
-                                            aria-checked={isSelected}
-                                            selected={isItemSelected}
-                                            tabIndex={-1}>
-                                            <TableCell align="center">
-                                                {user?.role === "Manager" && (
-                                                    <Checkbox
-                                                        color="primary"
-                                                        checked={isItemSelected}
-                                                        onClick={(event) =>
-                                                            user?.role === "Manager"
-                                                                ? handleClick(event, id)
-                                                                : null
-                                                        }
-                                                        inputProps={{
-                                                            "aria-labelledby": labelId,
-                                                        }}
-                                                    />
-                                                )}
-                                            </TableCell>
-                                            <TableCell align="center" id={labelId}>
-                                                {" "}
-                                                <Link
-                                                    to={{
-                                                        pathname: `/order/${id}`,
-                                                        state: {
-                                                            list,
-                                                            status,
-                                                            totalPrice,
-                                                            totalQuantity,
-                                                            timestamp,
-                                                            id,
-                                                            approveBy,
-                                                            approvedTimestamp,
-                                                        },
-                                                    }}
-                                                >
-                                                    {user?.role === "Manager" ? customer.first_name : id}
-                                                </Link>
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {new Date(timestamp?.toDate()).toLocaleDateString()}
-                                            </TableCell>
-
-                                            <TableCell align="center">${totalPrice}</TableCell>
-                                            <TableCell
-                                                align="center"
-                                                className={
-                                                    status === "Processing"
-                                                        ? "orders__processing"
-                                                        : "orders__processed"
-                                                }
-                                            >
-                                                <span
-                                                    className="orders__status"
-                                                    onClick={() => changeOrderStatus(id, status)}
-                                                >
-                                                    {status}</span>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
-        </div>
+        <Box m="20px">
+            <Header title="INVOICES" subtitle="List of Invoice Balances" />
+            <Box
+                m="40px 0 0 0"
+                height="75vh"
+                sx={{
+                    "& .MuiDataGrid-root": {
+                        border: "none",
+                    },
+                    "& .MuiDataGrid-cell": {
+                        borderBottom: "none",
+                    },
+                    "& .name-column--cell": {
+                        color: colors.greenAccent[300],
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: colors.blueAccent[700],
+                        borderBottom: "none",
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                        backgroundColor: colors.primary[400],
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        borderTop: "none",
+                        backgroundColor: colors.blueAccent[700],
+                    },
+                    "& .MuiCheckbox-root": {
+                        color: `${colors.greenAccent[200]} !important`,
+                    },
+                }}
+            >
+                <DataGrid checkboxSelection rows={ordersList} columns={columns} />
+            </Box>
+        </Box>
     );
-}
+};
 
 export default Orders;

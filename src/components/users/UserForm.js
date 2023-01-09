@@ -3,7 +3,7 @@ import "./UserForm.css";
 import db from "../../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, selectUserInfo } from "../../features/userSlice";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserTransaction from "./UserTransaction";
 import UserDeleteModal from "./UserDeleteModal";
 import { Modal } from "@mui/material";
@@ -32,7 +32,7 @@ function UserForm(props) {
   const [emailId, setEmailId] = useState(email);
   const [userName, setUserName] = useState(username);
   const [userRole, setUserRole] = useState(role);
-  const history = useHistory();
+  const history = useNavigate();
   const userInfo = useSelector(selectUserInfo);
   const [userOrders, setUserOrders] = useState([]);
   const [open, setOpen] = useState(false);

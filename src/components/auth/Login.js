@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Login.css";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import Message from "../header/Message";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
-  const history = useHistory();
+  const history = useNavigate();
   const [message, setMessage] = useState(false);
 
   return (

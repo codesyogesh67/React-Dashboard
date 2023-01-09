@@ -2,7 +2,7 @@ import React from "react";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import "./Sidebar.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ import { showSideBar, updateFilterStatus } from "../../features/extraSlice";
 import { emptyOrderList } from "../../features/orderSlice";
 
 function Links() {
-  const history = useHistory();
+  const history = useNavigate();
 
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();

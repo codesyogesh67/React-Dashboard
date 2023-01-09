@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectUserInfo } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import db from "../../firebase";
@@ -19,7 +19,7 @@ const style = {
 };
 
 const UserDeleteModal = React.forwardRef(({ id, email }, ref) => {
-  const history = useHistory();
+  const history = useNavigate();
   const user = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 

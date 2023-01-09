@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import * as Yup from "yup";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Formik } from "formik";
 import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
@@ -10,7 +10,7 @@ import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
 import Message from "../header/Message";
 
 function SignUp() {
-  const history = useHistory();
+  const history = useNavigate();
 
   const [message, setMessage] = useState({ status: false, body: "" });
 

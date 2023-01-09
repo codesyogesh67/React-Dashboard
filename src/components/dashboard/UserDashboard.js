@@ -8,16 +8,18 @@ import Records from "./components/Records";
 import Customers from "./components/Customers";
 import { useLocation } from "react-router-dom";
 
-const Dashboard = () => {
+const UserDashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const user = useSelector(selectUserInfo);
+    const location = useLocation()
+    const name = location.state?.name
 
     return (
         <Box m="20px">
             {/* HEADER */}
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+                <Header title={name} subtitle="Welcome to my dashboard" />
             </Box>
             <Box
                 display="grid"
@@ -68,4 +70,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default UserDashboard;

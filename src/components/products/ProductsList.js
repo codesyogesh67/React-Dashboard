@@ -44,6 +44,7 @@ function ProductsList() {
 
     return () => unsubscribe;
   }, []);
+  console.log('productslits', productList)
 
   const addToCart = (productId, name, price) => {
     const orderRef = db

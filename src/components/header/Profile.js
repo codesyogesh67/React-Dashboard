@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Profile.css";
 import { useSelector } from "react-redux";
 import db from "../../firebase";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectUserInfo } from "../../features/userSlice";
 import { updateDoc, doc } from "../../firebase";
 
@@ -14,7 +14,7 @@ function Profile() {
   const [emailId] = useState(user.email);
   const [userName, setUserName] = useState(user.username);
   const [userRole] = useState(user.role);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
