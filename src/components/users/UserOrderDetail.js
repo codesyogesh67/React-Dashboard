@@ -1,159 +1,131 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Collapse,
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Box, Typography, useTheme } from "@mui/material";
+import db, { auth, getDoc, addDoc, where, collection, getDocs, query, doc }
+    from "../../firebase";
+import { tokens } from "../../theme";
+import Header from "../header/Header";
+import { DataGrid } from '@mui/x-data-grid'
+// import {
 
-export default function CollapsibleTable(props) {
-  const { orders } = props.location.state;
+//     DataGridPro,
+//     GridColumns,
+//     GridFilterModel,
+//     GridLinkOperator,
+//     GridRowsProp,
+//     DataGridProProps,
+// } from '@mui/x-data-grid-pro';
+import { useLocation } from 'react-router-dom';
 
-  const history = useNavigate();
 
-  let orderList = [];
-  orderList.push(
-    orders.map(
-      ({
-        id,
-        data: { timestamp, totalQuantity, totalPrice, status, list },
-      }) => ({
-        id,
-        data: {
-          timestamp,
-          totalQuantity,
-          totalPrice,
-          status,
-          list,
+
+function UserOrderDetail() {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [userOrderList, setUserOrderList] = useState([])
+    const location = useLocation()
+    const { name, email } = location.state
+
+
+
+
+    useEffect(() => {
+
+        console.log(email)
+
+        async function get_user_orders() {
+
+            const ref = query(collection(db, "orders"), where("customer.email", "==", email))
+            const data = await getDocs(ref)
+
+
+
+
+            setUserOrderList(
+                data.docs.map((order) => ({
+                    id: order.id,
+                    price: order.data().totalPrice,
+                    quantity: order.data().totalQuantity,
+                    status: order.data().status,
+                    list: order.list,
+                    date: typeof order.data().timestamp.toDate === "function"
+                        ? new Date(order.data().timestamp.toDate()).toLocaleDateString()
+                        : new Date(order.data().timestamp.seconds * 1000).toLocaleDateString()
+                }
+
+                )))
+
+
+        }
+        get_user_orders()
+
+
+    }, []);
+    console.log('urser order list', userOrderList)
+
+    const columns = [
+        { field: "id", headerName: "ID" },
+
+        {
+            field: "date",
+            headerName: "Date Created",
+            flex: 1,
+
         },
-      })
-    )
-  );
-  const goback = () => {
-    history.goBack();
-  };
+        {
+            field: "quantity",
+            headerName: "Quantity",
+            flex: 1,
+            cellClassName: "date-column--cell",
+        },
+        {
+            field: "price",
+            headerName: "Amount",
+            flex: 1,
+        },
+        {
+            field: "status",
+            headerName: "Status",
+            flex: 1,
+        },
 
-  return (
-    <div className="userOrderDetail">
-      <div className="userOrderDetail__container">
-        <div className="userOrderDetail__back">
-          <p onClick={goback}>{props?.location.state.username}</p>
-          <span>/ OrderDetail </span>
-        </div>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Order</TableCell>
-                <TableCell align="center">Date Created</TableCell>
-                <TableCell align="center">Total Items</TableCell>
-                <TableCell align="center">Total Amount</TableCell>
-                <TableCell align="center">Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orderList[0].map((order) => (
-                <UserOrderDetail
-                  key={order.id}
-                  data={order.data}
-                  id={order.id}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
-  );
-}
 
-function UserOrderDetail(props) {
-  const [open, setOpen] = useState(false);
-
-  const { data } = props;
-  const { id } = props;
-
-  const { timestamp, totalQuantity, totalPrice, status, list } = data;
-
-  return (
-    <React.Fragment>
-      <TableRow className="userOrderDetail__mainRow">
-        <TableCell
-          component="th"
-          scope="row"
-          align="center"
-          onClick={() => setOpen(!open)}
-        >
-          {id}
-        </TableCell>
-        <TableCell align="center">
-          {typeof timestamp.toDate === "function"
-            ? new Date(timestamp.toDate()).toLocaleDateString()
-            : new Date(timestamp.seconds * 1000).toLocaleDateString()}
-        </TableCell>
-        <TableCell align="center">{totalQuantity}</TableCell>
-        <TableCell align="center">$ {totalPrice}</TableCell>
-        <TableCell align="center">
-          <span
-            className={
-              status === "Processing"
-                ? "status__processing"
-                : "status__processed"
-            }
-          >
-            {status}
-          </span>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography
-                variant="h6"
-                gutterBottom
-                component="div"
-              ></Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">Product Id</TableCell>
-                    <TableCell align="center">Product Name</TableCell>
-                    <TableCell align="center">Quantity</TableCell>
-                    <TableCell align="center">Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {list.map(
-                    ({
-                      cartItemId,
-                      data: { productId, name, price, quantity },
-                    }) => (
-                        <TableRow key={cartItemId}>
-                          <TableCell component="th" scope="row" align="center">
-                            {productId}
-                          </TableCell>
-                          <TableCell align="center">{name}</TableCell>
-                          <TableCell align="center"> {quantity}</TableCell>
-                          <TableCell align="center">
-                            $ {price * quantity}
-                          </TableCell>
-                        </TableRow>
-                      )
-                  )}
-                </TableBody>
-              </Table>
+    ];
+    return (
+        <Box m="20px">
+            <Header title="Order Details" subtitle="List of Invoice Balances" />
+            <Box
+                m="40px 0 0 0"
+                height="75vh"
+                sx={{
+                    "& .MuiDataGrid-root": {
+                        border: "none",
+                    },
+                    "& .MuiDataGrid-cell": {
+                        borderBottom: "none",
+                    },
+                    "& .name-column--cell": {
+                        color: colors.greenAccent[300],
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: colors.blueAccent[700],
+                        borderBottom: "none",
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                        backgroundColor: colors.primary[400],
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        borderTop: "none",
+                        backgroundColor: colors.blueAccent[700],
+                    },
+                    "& .MuiCheckbox-root": {
+                        color: `${colors.greenAccent[200]} !important`,
+                    },
+                }}
+            >
+                <DataGrid checkboxSelection rows={userOrderList} columns={columns} />
             </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
+        </Box>
+    )
 }
+
+export default UserOrderDetail

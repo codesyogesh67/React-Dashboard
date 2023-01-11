@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function Customers() {
     const [customer, setCustomer] = useState([]);
+    const [userOrders, setUserOrders] = useState([]);
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -47,12 +48,6 @@ function Customers() {
             mounted = false;
         };
     }, []);
-
-    const userDashboard = (name) => {
-        navigate(`/dashboard/${name}`)
-    }
-
-    const propData = { id: 1 }
 
     return (
         <Box
@@ -102,7 +97,7 @@ function Customers() {
                                 <AvatarColors name={first_name?.toUpperCase()} />
 
                             </Typography>
-                            <Link to={`/dashboard/${full_name}`} state={{ name: full_name }}>
+                            <Link to={`/dashboard/${full_name}`} state={{ name: full_name, username, email }}>
                                 <Typography color={colors.grey[100]} >
                                     {
                                         full_name

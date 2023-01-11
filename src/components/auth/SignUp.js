@@ -146,7 +146,7 @@ function SignUp() {
           </Formik>
 
           <p className="signUp__footerText">
-            Already a member? <Link to="/login">Log in now</Link>
+            Already a member? <Link to="/">Log in now</Link>
           </p>
         </div>
       </div>

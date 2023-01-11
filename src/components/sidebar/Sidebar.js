@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, IconButton, Typography, useTheme, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
@@ -19,19 +19,25 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "../../features/userSlice";
+import { emptyOrderList } from "../../features/orderSlice";
+import { updateFilterStatus } from "../../features/extraSlice";
+import { getAuth, signOut } from "firebase/auth";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected, setSelected, onClick }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const changeTitle = () => {
+        setSelected(title)
+    }
     return (
         <MenuItem
             active={selected === title}
             style={{
                 color: colors.grey[100],
             }}
-            onClick={() => setSelected(title)}
+            onClick={changeTitle}
             icon={icon}
         >
             <Typography>{title}</Typography>
@@ -46,6 +52,22 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
     const user = useSelector(selectUserInfo)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const logout = () => {
+        console.log('singing out...')
+        dispatch(emptyOrderList());
+        dispatch(updateFilterStatus(false));
+        const auth = getAuth()
+        signOut(auth).then(() => {
+            navigate("/");
+        }).catch((error) => {
+            navigate("/")
+        })
+
+
+    };
 
     return (
         <Box
@@ -110,7 +132,7 @@ const Sidebar = () => {
                             <Box textAlign="center">
 
                                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                                    {user.name}
+                                    {user?.name}
                                 </Typography>
                             </Box>
                         </Box>
@@ -162,13 +184,17 @@ const Sidebar = () => {
                             selected={selected}
                             setSelected={setSelected}
                         />
-                        <Item
-                            title="Log out"
-                            to="/calendar"
-                            icon={<ExitToAppIcon />}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
+
+                        <div onClick={logout}>
+                            <Item
+                                title="Log out"
+
+
+                                icon={<ExitToAppIcon />}
+
+                            /> </div>
+
+
                         <Item
                             title="FAQ Page"
                             to="/faq"

@@ -39,15 +39,17 @@ function Records() {
                 customers.push(querySnapshot)
             }
 
-            setTotalCustomers(customers.length);
+
+            setTotalCustomers(customers[0].docs.length);
             setLoading(false)
         }
         get_records()
     },
         [ordersList]);
+    console.log('orderList', ordersList)
 
     const pendingOrders = ordersList?.filter(
-        (order) => order.data.status === "Processing"
+        (order) => order.data.status === "Pending"
     );
 
 
