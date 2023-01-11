@@ -7,9 +7,8 @@ This is built with:
 •	Flexbox
 
 
-![Ecommerce-Dashboard](https://user-images.githubusercontent.com/70290319/211067005-1eb0974f-0d44-42f0-8531-8912fe8bfe04.png)
+ ![Ecommerce-Dashboard1](https://user-images.githubusercontent.com/70290319/211689619-97034c4c-33f8-4c63-a467-59f29d4bbcec.png)
 
- 
  
  
  
