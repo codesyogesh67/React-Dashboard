@@ -6,10 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import Message from "../header/Message";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { tokens } from "../../theme";
+import { useTheme } from "@emotion/react";
 
 function Login() {
   const history = useNavigate();
   const [message, setMessage] = useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   return (
     <div className="login">
@@ -98,7 +102,7 @@ function Login() {
             }}
           </Formik>
           <p className="login__footerText">
-            Not a member? <Link to="/signup">Sign Up now</Link>
+            Not a member? <Link to="/signup" >Sign Up now</Link>
           </p>
 
           <p>
@@ -106,7 +110,7 @@ function Login() {
           </p>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

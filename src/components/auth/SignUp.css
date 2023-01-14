@@ -19,9 +19,16 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow:2px 2px 5px #b5cbc5;
+
+  border-radius: 1.5rem;
 }
 .signUp__title {
   text-align: center;
+  color: #4cceac;
+  text-transform:uppercase;
+margin-top:1rem;
+
 }
 
 .signUp__form {
@@ -32,8 +39,12 @@
 
 .signUp__form label {
   padding: 0.2rem;
-  color: rgb(80, 80, 80);
-  font-size: 0.8rem;
+  margin-top:1.2rem;
+  color: #4cceac;
+  font-size:0.8rem;
+  text-transform:uppercase;
+
+
 }
 
 .signUp__form input:focus {
@@ -42,25 +53,33 @@
 
 .signUp__form input {
   border: none;
-  padding: 0.4rem;
-  margin: 0.2rem 0;
+  padding: 0.7rem;
+  margin-top:0.4rem;
   border-radius: 0.2rem;
   background-color: rgb(238, 238, 238);
 }
 
 .signUp__form button {
   color: white;
-  background: rgb(36, 36, 36);
-  padding: 0.5rem;
-  margin-top: 0.6em;
+  font-weight:800;
+  background: #4cceac;
+  padding: 0.7rem;
+  margin-top: 1.7rem;
   border-radius: 0.4rem;
   font-size: 0.8rem;
   outline: none;
   border: none;
 }
 
+.signUp__form > button:hover{
+  color:black;
+}
 .signUp__footerText {
   margin-left: 1rem;
+}
+
+.signUp__footerText >a {
+  color:#4cceac;
 }
 
 @media screen and (max-width: 600px) {

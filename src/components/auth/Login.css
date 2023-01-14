@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100vw;
   margin-top: 10vh;
   padding: 2rem 2rem;
@@ -10,8 +9,10 @@
 
 .login__container {
   padding: 30px;
-  border: 1px solid rgb(174, 174, 174);
-  border-radius: 0.4rem;
+  border: 2px solid #bfe5db;
+  box-shadow:2px 2px 5px #b5cbc5;
+
+  border-radius: 1.5rem;
 
   border-style: box;
   width: 60vw;
@@ -25,6 +26,9 @@
 }
 .login__title {
   text-align: center;
+color:#4cceac;
+text-transform:uppercase;
+margin-top:1rem;
 }
 
 .login__form {
@@ -35,8 +39,11 @@
 
 .login__form label {
   padding: 0.2rem;
-  color: rgb(80, 80, 80);
+  margin-top:1.2rem;
+  /* color: rgb(80, 80, 80); */
+  color: #4cceac;
   font-size: 0.8rem;
+  text-transform:uppercase;
 }
 
 .login__form input:focus {
@@ -45,33 +52,45 @@
 
 .login__form input {
   border: none;
-  padding: 0.4rem;
-  margin: 0.2rem 0;
+  padding: 0.7rem;
+  margin-top:0.4rem;
   border-radius: 0.2rem;
   background-color: rgb(238, 238, 238);
 }
 
 .login__form > button {
-  color: rgb(249, 249, 249);
-  background: rgb(36, 36, 36);
-  padding: 0.5rem;
-  margin-top: 0.6em;
+  color: white;
+  font-weight:800;
+  background: #4cceac;
+  padding: 0.7rem;
+  margin-top: 1.7rem;
   border-radius: 0.4rem;
   font-size: 0.8rem;
   outline: none;
   border: none;
   cursor: pointer;
+  text-transform:uppercase;
 }
+
+.login__form > button:hover{
+  color:black;
+}
+
 .login__form > button:disabled {
   opacity: 0.6;
 }
 
 .login__footerText {
   margin-left: 1.2rem;
+
+}
+
+.login__footerText >a {
+  color:#4cceac;
 }
 .errors-feedback {
   font-size: 0.8rem;
-  color: red;
+  color: white;
   padding: 0.2rem;
 }
 .errors {
