@@ -56,7 +56,7 @@ const Sidebar = () => {
     const dispatch = useDispatch()
 
     const logout = () => {
-        console.log('singing out...')
+
         dispatch(emptyOrderList());
         dispatch(updateFilterStatus(false));
         const auth = getAuth()

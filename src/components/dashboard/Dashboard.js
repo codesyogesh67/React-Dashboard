@@ -21,7 +21,7 @@ const Dashboard = () => {
             </Box>
             <Box
                 display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
+                gridTemplateColumns="repeat(auto-fit,minmax(150px,1fr))"
                 gridAutoRows="140px"
                 gap="20px"
                 mb="20px"
@@ -34,26 +34,36 @@ const Dashboard = () => {
 
             <Box
                 display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
+
+                sx={{
+                    gridTemplateColumns: {
+
+                        xs: "repeat(auto-fit, minmax(300px,1fr))",
+
+                        md: "250px 1fr"
+                    }
+                }}
+
+
+                placedItems="center"
                 gap="20px"
                 mb="20px"
+
             >
 
                 <Box
-                    gridColumn="span 4"
-                    display="flex "
+
+                    display="flex"
                     justifyContent="space-between"
-                    alignItems="center"
-
-
                 >
                     {user?.role === "Manager" && (
                         <Customers />
                     )}
                 </Box>
 
+
                 <Box
-                    gridColumn="span 8"
+                    maxWidth="600px"
                 >
                     <Orders />
                 </Box>

@@ -76,6 +76,7 @@ function Orders() {
             gridRow="span 2"
             backgroundColor={colors.primary[400]}
             overflow="auto"
+            p="20px 10px"
         >
             <Box
                 display="flex"

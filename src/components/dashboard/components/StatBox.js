@@ -8,7 +8,7 @@ const StatBox = ({ title, subtitle, icon }) => {
     return (
         <Box width="100%" m="0 30px">
             <Box>
-                <Box display="flex" alignItems="center" alignItems="center" >
+                <Box display="flex" alignItems="center" >
                     {icon}
                     <Typography
                         variant="h4"

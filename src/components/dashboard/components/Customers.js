@@ -52,64 +52,67 @@ function Customers() {
     return (
         <Box
             width="100%"
+            p="20px 10px"
             backgroundColor={colors.primary[400]}
-
         >
             <Box
                 display="flex"
                 justifyContent="space-between"
-                alignItems="center"
+
+
                 colors={colors.grey[100]}
-                p="15px"
+                p="15px 20px"
 
             >
-                <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+                <Typography color={colors.grey[100]} variant="h5" fontWeight="600" textAlign="center">
                     Customers
           </Typography>
             </Box>
-            {customer.map((each) => {
-                const {
-                    id,
-                    data: { first_name, last_name, email, role, username },
-                } = each;
-                const full_name = first_name.charAt(0).toUpperCase() +
-                    first_name.slice(1) +
-                    " " +
-                    last_name.charAt(0).toUpperCase() +
-                    last_name.slice(1)
+            <Box display="grid" gridTemplateColumns="repeat(auto-fit,minmax(160px,1fr))">
+                {customer.map((each) => {
+                    const {
+                        id,
+                        data: { first_name, last_name, email, role, username },
+                    } = each;
+                    const full_name = first_name.charAt(0).toUpperCase() +
+                        first_name.slice(1) +
+                        " " +
+                        last_name.charAt(0).toUpperCase() +
+                        last_name.slice(1)
 
-                return (
-                    <Box
-                        key={id}
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
+                    return (
+                        <Box
+                            key={id}
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
 
-                        p="15px"
-                    >
-                        <Box display="flex" justifyContent="space-around" alignItems="center">
-                            <Typography
-                                color={colors.greenAccent[500]}
-                                variant="h5"
-                                fontWeight="600"
-                                pr="10px"
-                            >
-                                <AvatarColors name={first_name?.toUpperCase()} />
+                            p="15px"
+                        >
+                            <Box display="flex" justifyContent="space-around" alignItems="center">
+                                <Typography
+                                    color={colors.greenAccent[500]}
+                                    variant="h5"
+                                    fontWeight="600"
+                                    pr="10px"
+                                >
+                                    <AvatarColors name={first_name?.toUpperCase()} />
 
-                            </Typography>
-                            <Link to={`/dashboard/${full_name}`} state={{ name: full_name, username, email }}>
-                                <Typography color={colors.grey[100]} >
-                                    {
-                                        full_name
-                                    }
-                                </Typography></Link>
+                                </Typography>
+                                <Link to={`/dashboard/${full_name}`} state={{ name: full_name, username, email }}>
+                                    <Typography color={colors.grey[100]} >
+                                        {
+                                            full_name
+                                        }
+                                    </Typography></Link>
+
+                            </Box>
+
 
                         </Box>
-
-
-                    </Box>
-                );
-            })}
+                    );
+                })}
+            </Box>
         </Box >
 
     )
