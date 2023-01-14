@@ -60,7 +60,6 @@ function App() {
 
                 const querySnapshot = await getDocs(q)
 
-
                 if (querySnapshot.docs.length > 0) {
                     querySnapshot.forEach(doc => {
                         const {
@@ -83,9 +82,10 @@ function App() {
                             }))
                     })
                 }
-                else {
-                    dispatch(logout())
-                }
+
+            }
+            else {
+                dispatch(logout())
             }
         })
 
@@ -98,6 +98,7 @@ function App() {
                 <div className="app">
                     {
                         user ? (
+
                             <>
                                 <Sidebar isSidebar={isSidebar} />
 
@@ -105,13 +106,6 @@ function App() {
                                     <Topbar setIsSidebar={setIsSidebar} />
                                     <Routes>
                                         <Route exact path="/" element={<Dashboard />} />
-                                        {/* <Route exact path="/users"
-                                        element={
-                                            <PrivateRoute>
-                                                <Users />
-                                            </PrivateRoute>
-                                        }
-                                    /> */}
                                         <Route exact path="/dashboard/:user" element={<UserDashboard />} />
                                         <Route exact path="/users" element={<Users />} />
 
@@ -147,6 +141,7 @@ function App() {
                                     </Routes>
                                 </>
                             )}
+
                 </div>
             </ThemeProvider>
         </ColorModeContext.Provider>

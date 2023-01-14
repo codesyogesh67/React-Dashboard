@@ -7,6 +7,7 @@ import Orders from "./components/Orders";
 import Records from "./components/Records";
 import Customers from "./components/Customers";
 import { useLocation } from "react-router-dom";
+import UserOrderDetail from "../users/UserOrderDetail";
 
 const UserDashboard = () => {
     const theme = useTheme();
@@ -41,23 +42,12 @@ const UserDashboard = () => {
                 mb="20px"
             >
 
-                <Box
-                    gridColumn="span 4"
-                    display="flex "
-                    justifyContent="space-between"
-                    alignItems="center"
 
-
-                >
-                    {user?.role === "Manager" && (
-                        <Customers />
-                    )}
-                </Box>
 
                 <Box
                     gridColumn="span 8"
                 >
-                    <Orders />
+                    <UserOrderDetail name={location.state?.name} />
                 </Box>
 
 

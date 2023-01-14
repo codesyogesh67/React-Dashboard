@@ -39,15 +39,17 @@ function Records() {
                 customers.push(querySnapshot)
             }
 
-            setTotalCustomers(customers.length);
+
+            setTotalCustomers(customers[0].docs.length);
             setLoading(false)
         }
         get_records()
     },
         [ordersList]);
 
+
     const pendingOrders = ordersList?.filter(
-        (order) => order.data.status === "Processing"
+        (order) => order.data.status === "Pending"
     );
 
 
@@ -88,6 +90,7 @@ function Records() {
 
     return (
         <>
+
             {!loading ?
 
                 (
@@ -95,8 +98,10 @@ function Records() {
                         (
                             <Box
                                 key={name}
-                                gridColumn="span 3"
+                                // gridColumn="span 3"
+                                gridTemplateColumns="200px minmax(100px, 400px)"
                                 backgroundColor={colors.primary[400]}
+
                                 display="flex"
                                 alignItems="center"
                                 justifyContent="center"
@@ -111,7 +116,9 @@ function Records() {
                             </Box>
                         )
                     )
+
                 ) : <Skeleton variant="rectangular" />}
+
         </>
     )
 }
