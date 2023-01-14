@@ -12,6 +12,10 @@ import { getDocs, query, collection, where } from "../../../firebase";
 import { tokens } from "../../../theme";
 import { Box, useTheme } from "@mui/material";
 import Skeleton from '@mui/material/Skeleton';
+import { useLocation } from "react-router-dom";
+
+
+
 
 function Records() {
     const theme = useTheme();
@@ -21,12 +25,21 @@ function Records() {
     const [totalCustomers, setTotalCustomers] = useState(0);
     const ordersList = useSelector(selectOrdersList);
     const [loading, setLoading] = useState(true)
+    const location = useLocation()
+    const [showCustomersBox, setShowCustomersBox] = useState(false);
+
+
 
     useEffect(() => {
         const total = [];
         const customers = [];
+        if (location.state) {
+
+            setShowCustomersBox(true)
+        }
 
         async function get_records() {
+
             if (ordersList?.length > 0) {
                 ordersList.map((order) => total.push(order.data.totalPrice));
             }
@@ -53,14 +66,8 @@ function Records() {
     );
 
 
-    const data = [
-        {
-            icon: <GroupIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-            />,
-            value: totalCustomers,
-            name: "Total Customers"
-        },
+
+    const userData = [
 
 
         {
@@ -88,13 +95,24 @@ function Records() {
 
     ]
 
+    const data = [...userData,
+    {
+        icon: <GroupIcon
+            sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+        />,
+        value: totalCustomers,
+        name: "Total Customers"
+    }
+
+    ]
+
     return (
         <>
 
             {!loading ?
 
-                (
-                    data.map(({ icon, value, name }) =>
+                (showCustomersBox ? (
+                    userData.map(({ icon, value, name }) =>
                         (
                             <Box
                                 key={name}
@@ -105,6 +123,7 @@ function Records() {
                                 display="flex"
                                 alignItems="center"
                                 justifyContent="center"
+
                             >
                                 <StatBox
                                     title={value}
@@ -116,8 +135,31 @@ function Records() {
                             </Box>
                         )
                     )
+                ) : (
+                        data.map(({ icon, value, name }) =>
+                            (
+                                <Box
+                                    key={name}
+                                    // gridColumn="span 3"
+                                    gridTemplateColumns="200px minmax(100px, 400px)"
+                                    backgroundColor={colors.primary[400]}
 
-                ) : <Skeleton variant="rectangular" />}
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <StatBox
+                                        title={value}
+                                        subtitle={name}
+                                        icon={
+                                            icon
+                                        }
+                                    />
+                                </Box>
+                            )
+                        )
+
+                    )) : <Skeleton variant="rectangular" />}
 
         </>
     )

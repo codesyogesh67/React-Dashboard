@@ -30,7 +30,7 @@ function UserOrderDetail() {
 
     useEffect(() => {
 
-        console.log(email)
+
 
         async function get_user_orders() {
 
@@ -60,7 +60,7 @@ function UserOrderDetail() {
 
 
     }, []);
-    console.log('urser order list', userOrderList)
+
 
     const columns = [
         { field: "id", headerName: "ID" },

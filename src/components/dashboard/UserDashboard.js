@@ -24,10 +24,11 @@ const UserDashboard = () => {
             </Box>
             <Box
                 display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
+                gridTemplateColumns="repeat(auto-fit,minmax(150px,1fr))"
                 gridAutoRows="140px"
                 gap="20px"
                 mb="20px"
+                maxWidth="1000px"
             >
                 {/* ROW 1 */}
                 <Records />
@@ -36,16 +37,17 @@ const UserDashboard = () => {
             {/* ROW 2 */}
 
             <Box
-                display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
-                gap="20px"
-                mb="20px"
+            // display="grid"
+            // gridTemplateColumns="repeat(12, 1fr)"
+            // gap="20px"
+            // mb="20px"
             >
 
 
 
                 <Box
                     gridColumn="span 8"
+                    maxWidth="1000px"
                 >
                     <UserOrderDetail name={location.state?.name} />
                 </Box>

@@ -25,6 +25,7 @@ const Dashboard = () => {
                 gridAutoRows="140px"
                 gap="20px"
                 mb="20px"
+                maxWidth="1000px"
             >
                 {/* ROW 1 */}
                 <Records />
@@ -43,11 +44,9 @@ const Dashboard = () => {
                         md: "250px 1fr"
                     }
                 }}
-
-
-                placedItems="center"
                 gap="20px"
                 mb="20px"
+                maxWidth="1000px"
 
             >
 
@@ -63,7 +62,7 @@ const Dashboard = () => {
 
 
                 <Box
-                    maxWidth="600px"
+                // maxWidth="600px"
                 >
                     <Orders />
                 </Box>
