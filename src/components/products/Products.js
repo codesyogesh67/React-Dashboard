@@ -27,7 +27,6 @@ function Products() {
         async function get_products() {
             const ref = collection(db, "products")
             const products = await getDocs(ref)
-            console.log("products", products)
 
             setProductList(
                 products.docs.map((doc) =>
@@ -47,7 +46,7 @@ function Products() {
         }
         get_products()
 
-    }, []);
+    }, [productList]);
 
 
 
@@ -123,7 +122,7 @@ function Products() {
             flex: 1,
         },
         {
-            field: "role",
+            field: "action",
             headerName: "Action",
             flex: 1,
 
@@ -134,7 +133,7 @@ function Products() {
         <Box m="20px">
             <Header
                 title="Products"
-                subtitle="Managing the Users"
+            // subtitle="Managing the Users"
             />
             {userInfo?.role === "Manager" ? <AddProducts /> : <CartItems />}
 

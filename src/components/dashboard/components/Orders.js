@@ -105,7 +105,9 @@ function Orders() {
                         },
                     },
                     index
-                ) => (
+                ) => {
+                    console.log("data", timestamp)
+                    return (
                         <Box
                             key={id}
                             display="flex"
@@ -139,7 +141,8 @@ function Orders() {
                                 {status}
                             </Box>
                         </Box>
-                    ))}
+                    )
+                })}
         </Box>
 
     )

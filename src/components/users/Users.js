@@ -11,6 +11,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectPrevUsersList, selectFilteredList } from "../../features/userSlice";
 import { selectFilterStatus } from "../../features/extraSlice";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Users = () => {
@@ -21,6 +23,8 @@ const Users = () => {
     const data = useSelector(selectPrevUsersList);
     const filteredList = useSelector(selectFilteredList);
     const filterStatus = useSelector(selectFilterStatus);
+    const showName = () => { console.log("hello") }
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (filterStatus) {
@@ -39,10 +43,23 @@ const Users = () => {
     const columns = [
 
         {
-            field: "name",
+            field: "action",
             headerName: "Name",
             flex: 1,
             cellClassName: "name-column--cell",
+            renderCell: (params) => {
+
+                return (
+                    <Link to={`/dashboard/${params.row.name}`} state={{ name: params.row.name, username: params.row.username, email: params.row.email }}>
+                        <Typography color={colors.grey[100]} >
+                            {
+                                params.row.name
+                            }
+                        </Typography></Link>
+                )
+
+            }
+
         },
         {
             field: "username",

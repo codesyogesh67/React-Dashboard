@@ -29,7 +29,6 @@ const Orders = () => {
                 const ref = collection(db, "orders")
                 const filteredOrders = await getDocs(ref)
 
-                // ref.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
                 dispatch(
                     updateOrders(
                         filteredOrders.docs.map((doc) => ({
@@ -38,10 +37,11 @@ const Orders = () => {
                         }))
                     )
                 );
+
                 setOrdersList(
                     filteredOrders.docs.map((doc) => ({
                         id: doc.id,
-                        date: new Date(doc.data().date?.toDate()).toLocaleDateString(),
+                        date: new Date(doc.data().timestamp?.toDate()).toLocaleDateString(),
                         amount: doc.data().totalPrice,
                         status: doc.data().status
                     }))
@@ -128,6 +128,7 @@ const Orders = () => {
             headerName: "Date",
             flex: 1,
             cellClassName: "date-column--cell",
+
         },
         {
             field: "amount",
