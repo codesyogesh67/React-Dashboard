@@ -7,6 +7,7 @@ import Orders from "./components/Orders";
 import Records from "./components/Records";
 import Customers from "./components/Customers";
 import { useLocation } from "react-router-dom";
+import LineChart from "./components/LineChart";
 
 const Dashboard = () => {
     const theme = useTheme();
@@ -32,6 +33,18 @@ const Dashboard = () => {
             </Box>
 
             {/* ROW 2 */}
+            <Box
+                display="grid"
+                gridTemplateColumns="repeat(auto-fit,minmax(150px,1fr))"
+                gridAutoRows="300px"
+                gap="20px"
+                mb="20px"
+                maxWidth="1000px"
+            >
+                {/* ROW 1 */}
+                <LineChart />
+            </Box>
+
 
             <Box
                 display="grid"

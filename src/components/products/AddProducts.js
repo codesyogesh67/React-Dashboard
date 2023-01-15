@@ -3,12 +3,17 @@ import db, { addDoc, collection } from "../../firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import "./Products.css";
+import { useTheme } from "@emotion/react";
+import { tokens } from "../../theme";
+import { Typography, Box } from "@mui/material";
 
 function AddProducts() {
   const [product, setProduct] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const user = useSelector(selectUser);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const submitProduct = (e) => {
     e.preventDefault();
@@ -29,8 +34,17 @@ function AddProducts() {
 
   return (
     <>
-      <h2 className="addproducts__title">Add Products</h2>
-
+      {/* <h2 className="addproducts__title" color={colors.greenAccent[400]}>Add Products</h2> */}
+      <Box display="flex" justifyContent="center" py="1rem">
+        <Typography
+          variant="h2"
+          color={colors.greenAccent[400]}
+          fontWeight="bold"
+        // sx={{ m: "0 0 5px 0" }}
+        >
+          Add Products
+      </Typography>
+      </Box>
       <form className="addproducts__form">
         <input
           value={product}

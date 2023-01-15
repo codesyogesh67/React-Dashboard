@@ -17,20 +17,24 @@
 } */
 
 /* Add products */
-
+/* 
+.addproducts__title{
+ color:black;
+} */
 .addproducts__form {
   display: flex;
   flex-direction: column;
   padding: 3rem;
+  padding-top:0rem;
   align-items: center;
   padding-bottom: 0;
 }
 
 .addproducts__form > input {
-  padding: 0.5rem;
+  padding: 0.7rem;
   border-radius: 0.3rem;
   border: 1px solid rgb(160, 159, 159);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   width: 260px;
   font-size: 1rem;
   outline-width: 0;
@@ -39,10 +43,10 @@
 .addproducts__form > button {
   width: 130px;
   margin-top: 0.5rem;
-  padding: 0.3rem;
+  padding: 0.5rem;
   border-radius: 0.3rem;
   border: 1px solid rgb(172, 171, 171);
-  background: #3ea4fb;
+  background: #4cceac;
   outline-width: 0;
   color: white;
   font-weight: 700;
