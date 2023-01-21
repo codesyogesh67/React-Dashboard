@@ -6,10 +6,12 @@ This is built with:
 •	Material-ui Component
 •	Flexbox
 
+Live url: https://managerapp-99a0d.web.app/
 
- ![Ecommerce-Dashboard1](https://user-images.githubusercontent.com/70290319/211689619-97034c4c-33f8-4c63-a467-59f29d4bbcec.png)
 
- 
+
+ ![Ecommerce-Dashboard (1)](https://user-images.githubusercontent.com/70290319/213872691-3d7eb045-ebab-4e99-8668-73690a9c21dc.png)
+
  
  
  It's Order Management App where you can place order, review order by manager or employee which can be seen in customer's order list as processing or
