@@ -36,12 +36,13 @@ import { getDoc, where, onAuthStateChanged, collection, getAuth, getDocs, query,
 import Topbar from "./components/sidebar/Topbar";
 import UserDashboard from "./components/dashboard/UserDashboard";
 
+
+
 function App() {
     const user = useSelector(selectUser);
     const [theme, colorMode] = useMode();
     const userInfo = useSelector(selectUserInfo);
     const [isSidebar, setIsSidebar] = useState(true);
-
 
     const dispatch = useDispatch();
 
@@ -90,6 +91,8 @@ function App() {
         })
 
     }, []);
+
+
 
     return (
         <ColorModeContext.Provider value={colorMode}>
